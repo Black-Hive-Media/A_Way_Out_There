@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3fca1683dc6e1947a5be321cd57338c, type: 3}
+  m_Name: Idle Conversation
+  m_EditorClassIdentifier: 
+  helpfulVariations:
+  - If I had a body, I would stretch right now.
+  - We have been drifting for 37 seconds. This is either relaxation or indecision.
+    Use WASD to MOVE.
+  snarkyVariations:
+  - "I was designed for navigation, not companionship\u2026 yet here we are."
+  - 'Fun fact: Space is mostly nothing. Much like this moment.'
+  snarkThreshold: 0.5

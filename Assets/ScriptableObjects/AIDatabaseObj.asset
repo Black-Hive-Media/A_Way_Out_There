@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e827d01b9a9c5d4984fa0bc8177a877, type: 3}
+  m_Name: AIDatabaseObj
+  m_EditorClassIdentifier: 
+  Messages:
+    m_Data:
+    - key: Basic Movement Controls
+      value: {fileID: 11400000, guid: 121a3105ed1189e45a62ff8692da295a, type: 2}
+    - key: Idle Conversation
+      value: {fileID: 11400000, guid: f33d873f0301bfd449cf8f42da20fe14, type: 2}
+    - key: PickedUpDirt
+      value: {fileID: 11400000, guid: b460fbcba6c88c242829d00da6b3e6c3, type: 2}
+    - key: PickedUpOutlaw
+      value: {fileID: 11400000, guid: 1cf11488c93346b4db1ab3802798509e, type: 2}
+    - key: LeavingMissionArea
+      value: {fileID: 11400000, guid: 026d7ae15d8a6b647842cda982445e0b, type: 2}

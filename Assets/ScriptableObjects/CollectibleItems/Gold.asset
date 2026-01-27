@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d63c7896e2a56b4cac5c2f118951fb4, type: 3}
+  m_Name: Gold
+  m_EditorClassIdentifier: 
+  itemName: Gold
+  description: 'Used to repair the scanner.
+
+'
+  icon: {fileID: 8149009158662877648, guid: 528977d7daeab05468be62ee370f20bc, type: 3}
+  systemFoundAt: 0
+  baseValue: 40
+  targetPort: 2
+  cargoUnitsRequired: 1
+  purityPercentage: 100

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9175e62a39227244896e269dc892e8e5, type: 3}
+  m_Name: LandingGear
+  m_EditorClassIdentifier: 
+  itemName: LandingGear
+  description: Allows you to land.
+  icon: {fileID: 8149009158662877648, guid: 528977d7daeab05468be62ee370f20bc, type: 3}
+  systemFoundAt: 0
+  baseValue: 20
+  targetPort: 3
+  cargoUnitsRequired: 1
+  compatibleEngineType: 
