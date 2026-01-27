@@ -28,3 +28,7 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 1d813969788322c4eb920b1f5f9a1348, type: 2}
     - key: GetBetterLaser
       value: {fileID: 11400000, guid: e8524d1b1e67c4447a287fdef89e8576, type: 2}
+    - key: GenericPickup
+      value: {fileID: 11400000, guid: 41b6257dc67a3f146bcc6b5cfb378603, type: 2}
+    - key: CargoBayFull
+      value: {fileID: 11400000, guid: 5494e50a1ebec3f47afe816739d56689, type: 2}

@@ -30,17 +30,27 @@ public class ItemWorldDisplay : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            // 1. Tell the AI we picked something up
-            AI_Manager.Instance.TriggerMessage(itemData.itemName);
+            if (CargoManager.instance.cargoCheck() == true)
+            {
+                // 1. Tell the AI we picked something up
+                //AI_Manager.Instance.TriggerMessage(itemData.itemName);
 
-            // 2. Logic for adding to inventory would go here
-            Debug.Log($"Collected: {itemData.itemName}");
+                // 2. Logic for adding to inventory would go here
+                Debug.Log($"Collected: {itemData.itemName}");
 
-            OnItemPickup(itemData);
+                OnItemPickup(itemData);
 
-            // 3. Return this object to the pool so it can be reused
-            ItemPoolManager.Instance.ReturnToPool(this.gameObject);
+                // 3. Return this object to the pool so it can be reused
+                ItemPoolManager.Instance.ReturnToPool(this.gameObject);
+            }
+            else
+            {
+                AI_Manager.Instance.TriggerMessage("CargoBayFull");
+            }
+
+
         }
+        
     }
 
     public void OnItemPickup(CollectibleItem newItem)

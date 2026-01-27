@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e272b4d2a16c3a4a9ad3f4973197fe7, type: 3}
+  m_Name: Outlaw
+  m_EditorClassIdentifier: 
+  itemName: Outlaw
+  description: 'Dangeros crimenal.
+
+'
+  icon: {fileID: 8149009158662877648, guid: 528977d7daeab05468be62ee370f20bc, type: 3}
+  systemFoundAt: 4
+  baseValue: 100
+  targetPort: 0
+  cargoUnitsRequired: 5
+  isHostile: 1
+  passengerName: Frank
