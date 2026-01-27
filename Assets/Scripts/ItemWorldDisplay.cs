@@ -1,3 +1,4 @@
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class ItemWorldDisplay : MonoBehaviour
@@ -30,17 +31,12 @@ public class ItemWorldDisplay : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (CargoManager.instance.cargoCheck() == true)
+            if (CargoManager.Instance.cargoCheck(itemData) == true)
             {
-                // 1. Tell the AI we picked something up
-                //AI_Manager.Instance.TriggerMessage(itemData.itemName);
-
-                // 2. Logic for adding to inventory would go here
-                Debug.Log($"Collected: {itemData.itemName}");
 
                 OnItemPickup(itemData);
 
-                // 3. Return this object to the pool so it can be reused
+                //Return this object to the pool so it can be reused
                 ItemPoolManager.Instance.ReturnToPool(this.gameObject);
             }
             else
