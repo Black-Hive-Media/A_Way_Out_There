@@ -5,7 +5,7 @@ public class ItemPoolManager : MonoBehaviour
 {
     public static ItemPoolManager Instance { get; private set; }
 
-    [SerializeField] private GameObject itemPrefab;
+    [SerializeField] private GameObject[] itemPrefab;
     [SerializeField] private int defaultCapacity = 20;
     [SerializeField] private int maxPoolSize = 50;
 
@@ -18,7 +18,12 @@ public class ItemPoolManager : MonoBehaviour
 
         // Initialize the built-in Unity pool
         pool = new ObjectPool<GameObject>(
-            createFunc: () => Instantiate(itemPrefab),
+            createFunc: () => {
+                // Select a random prefab from your array each time a new one is needed
+                GameObject randomPrefab = itemPrefab[Random.Range(0, itemPrefab.Length)];
+                return Instantiate(randomPrefab);
+            },            
+            //createFunc: () => Instantiate(itemPrefab),
             actionOnGet: (obj) => obj.SetActive(true),
             actionOnRelease: (obj) => obj.SetActive(false),
             actionOnDestroy: (obj) => Destroy(obj),

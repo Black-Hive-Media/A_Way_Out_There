@@ -24,3 +24,7 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 1cf11488c93346b4db1ab3802798509e, type: 2}
     - key: LeavingMissionArea
       value: {fileID: 11400000, guid: 026d7ae15d8a6b647842cda982445e0b, type: 2}
+    - key: AsteroidDestroyed
+      value: {fileID: 11400000, guid: 1d813969788322c4eb920b1f5f9a1348, type: 2}
+    - key: GetBetterLaser
+      value: {fileID: 11400000, guid: e8524d1b1e67c4447a287fdef89e8576, type: 2}
