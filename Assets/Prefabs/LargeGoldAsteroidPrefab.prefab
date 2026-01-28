@@ -64,6 +64,22 @@ PrefabInstance:
       propertyPath: asteriodSize
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6463212009941356355, guid: cef08b363a1cb71429f15a8500c62bdd, type: 3}
+      propertyPath: maxDropCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6463212009941356355, guid: cef08b363a1cb71429f15a8500c62bdd, type: 3}
+      propertyPath: lootTable.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6463212009941356355, guid: cef08b363a1cb71429f15a8500c62bdd, type: 3}
+      propertyPath: lootTable.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: e3fe409c9cedc7d469d0cede6153394e, type: 2}
+    - target: {fileID: 6463212009941356355, guid: cef08b363a1cb71429f15a8500c62bdd, type: 3}
+      propertyPath: lootTable.Array.data[0].weight
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 7384370985009879569, guid: cef08b363a1cb71429f15a8500c62bdd, type: 3}
       propertyPath: m_Name
       value: LargeGoldAsteroidPrefab

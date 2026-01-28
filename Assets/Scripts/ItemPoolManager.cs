@@ -5,7 +5,13 @@ public class ItemPoolManager : MonoBehaviour
 {
     public static ItemPoolManager Instance { get; private set; }
 
-    [SerializeField] private GameObject[] itemPrefab;
+    private ObjectPool<GameObject> asteroidPool;
+    private ObjectPool<GameObject> itemPool;
+
+    [SerializeField] private GameObject[] asteroidPrefabs;
+    [SerializeField] private GameObject itemPrefab;
+
+    //[SerializeField] private GameObject[] itemPrefab;
     [SerializeField] private int defaultCapacity = 20;
     [SerializeField] private int maxPoolSize = 50;
 
@@ -17,25 +23,52 @@ public class ItemPoolManager : MonoBehaviour
         Instance = this;
 
         // Initialize the built-in Unity pool
-        pool = new ObjectPool<GameObject>(
-            createFunc: () => {
-                // Select a random prefab from your array each time a new one is needed
-                GameObject randomPrefab = itemPrefab[Random.Range(0, itemPrefab.Length)];
-                return Instantiate(randomPrefab);
-            },            
-            //createFunc: () => Instantiate(itemPrefab),
+        // Initialize Asteroid Pool
+        asteroidPool = new ObjectPool<GameObject>(
+            createFunc: () => Instantiate(asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Length)]),
             actionOnGet: (obj) => obj.SetActive(true),
-            actionOnRelease: (obj) => obj.SetActive(false),
-            actionOnDestroy: (obj) => Destroy(obj),
-            collectionCheck: false,
-            defaultCapacity: defaultCapacity,
-            maxSize: maxPoolSize
+            actionOnRelease: (obj) => obj.SetActive(false)
+        );
+
+        // Initialize Item Pool
+        itemPool = new ObjectPool<GameObject>(
+            createFunc: () => Instantiate(itemPrefab),
+            actionOnGet: (obj) => obj.SetActive(true),
+            actionOnRelease: (obj) => obj.SetActive(false)
         );
     }
+    public GameObject GetAsteroid() => asteroidPool.Get();
+    public GameObject GetItem() => itemPool.Get();
 
+    // Specific release methods so objects go to the right internal pool
+    public void ReleaseAsteroid(GameObject obj) => asteroidPool.Release(obj);
+    public void ReleaseItem(GameObject obj) => itemPool.Release(obj);
+
+/*
     // Public method to access the pool
-    public GameObject GetFromPool() => pool.Get();
-
+    //public GameObject GetFromPool() => pool.Get();
+    public GameObject GetFromPool()
+    {
+        // If the pool is at max capacity and all are in use, 
+        // some implementations might return null or throw an error.
+        try
+        {
+            return pool.Get();
+        }
+        catch (System.Exception)
+        {
+            Debug.LogWarning("Pool Exhausted! AI is going to be snarky about this...");
+            return null;
+        }
+    }
     // Method for items to "despawn" themselves back to the pool
-    public void ReturnToPool(GameObject obj) => pool.Release(obj);
+    //public void ReturnToPool(GameObject obj) => pool.Release(obj);
+
+    public void ReturnToPool(GameObject obj)
+    {
+        // Safety check for 2026: don't release if already in the pool
+        if (!obj.activeInHierarchy) return;
+
+        pool.Release(obj);
+    }*/
 }

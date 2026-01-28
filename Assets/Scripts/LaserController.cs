@@ -27,7 +27,12 @@ public class LaserController : MonoBehaviour
         }
         
     }
-
+    public void UpdateLaserTier(MiningLaserStats newStats)
+    {
+        this.currentStats = newStats; // Overwrites Tier 1 with Tier 2, etc.
+                                      // Trigger AI snark about the new shiny laser
+        AI_Manager.Instance.TriggerMessage("LaserUpgraded");
+    }
     void UpdateLaserVisuals()
     {
         beamLine.enabled = true;
@@ -46,9 +51,12 @@ public class LaserController : MonoBehaviour
         {
             // Stop at the object we hit
             beamLine.SetPosition(1, hit.point);
-
+            
             // Tier 1 Logic: Actually mine the target
-            MineTarget(hit.collider.gameObject);
+            if (hit.collider.gameObject != null) 
+            {
+                MineTarget(hit.collider.gameObject);
+            }
         }
         else
         {

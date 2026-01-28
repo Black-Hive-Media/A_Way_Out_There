@@ -69,7 +69,7 @@ public class CollectibleItemSpawner : MonoBehaviour
          itemObj.transform.position = position;
          itemObj.GetComponent<ItemWorldDisplay>().Setup(data);*/
         // 1. Get the generic GameObject from the pool
-        GameObject itemObj = ItemPoolManager.Instance.GetFromPool();
+        GameObject itemObj = ItemPoolManager.Instance.GetItem();
         itemObj.transform.position = position;
 
         // 2. Access the ItemWorldDisplay component to inject the ScriptableObject data

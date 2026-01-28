@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: VapoRub
   m_EditorClassIdentifier: 
   itemName: VapoRub
-  description: 'Helps you fall asleep. '
+  description: Helps you breath easier.
   icon: {fileID: 8149009158662877648, guid: 528977d7daeab05468be62ee370f20bc, type: 3}
   systemFoundAt: 1
   baseValue: 60
