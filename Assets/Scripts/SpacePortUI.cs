@@ -47,6 +47,6 @@ public class SpacePortUI : MonoBehaviour
     private void SellItem(int index)
     {
         CargoManager.Instance.SellSpecificItem(index);
-        RefreshList(); // Update UI to reflect the removal
+        RefreshList(); 
     }
 }

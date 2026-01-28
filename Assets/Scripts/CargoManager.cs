@@ -16,6 +16,7 @@ public class CargoManager : MonoBehaviour
 
     public Transform[] placeHolderIconPos;
 
+    public List<GameObject> itemIcons = new List<GameObject>();
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -62,7 +63,6 @@ public class CargoManager : MonoBehaviour
 
         cargoList.Add(newItem);
 
-
         if (cargoFill.fillAmount == 1)
         {
             if (cargoFullImg.activeInHierarchy == false)
@@ -86,6 +86,8 @@ public class CargoManager : MonoBehaviour
         hudIcon.transform.position = placeHolderIconPos[cargoList.Count-1].position;
 
         hudIcon.transform.SetParent(placeHolderIconPos[cargoList.Count-1]);
+
+        itemIcons.Add(hudIcon);
     }
     // Logic to sell ONE specific item by its index in the UI list
     public void SellSpecificItem(int index)
@@ -104,9 +106,36 @@ public class CargoManager : MonoBehaviour
             cargoFullImg.SetActive(false);
         }
 
+        //Debug.Log(itemIcons.Count);
+
+        for (int i = 0; i < itemIcons.Count; i++)
+        {
+            //Debug.Log(itemIcons[i].name + "  " + i + "  " + itemToSell.prefabForHud.name);
+
+            if (itemIcons[i].name.Contains(itemToSell.prefabForHud.name)) 
+            {
+               
+                RemoveAndDestroy(itemIcons[i]);
+                
+                return;
+            }
+        }
+
+
         AI_Manager.Instance.TriggerMessage("ItemSold");
     }
 
+    public void RemoveAndDestroy(GameObject objectToDestroy)
+    {
+        // 1. Remove the reference from the list
+        if (itemIcons.Contains(objectToDestroy))
+        {
+            itemIcons.Remove(objectToDestroy);
+        }
+
+        // 2. Destroy the actual GameObject in the scene
+        Destroy(objectToDestroy);
+    }
     // Upgrade System: Call this when buying a bigger cargo hold
     public void UpgradeCargoCapacity(int additionalUnits)
     {

@@ -144,7 +144,6 @@ public class AsteroidHandler : MonoBehaviour, IMineable
         }
 
         itemObj.transform.position = transform.position;
-        Debug.Log(itemObj.gameObject.name);
         // Setup visuals and data
         //if (itemObj.GetComponent<ItemWorldDisplay>() != null) 
         //{//error on mining here
