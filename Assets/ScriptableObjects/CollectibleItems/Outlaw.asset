@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e272b4d2a16c3a4a9ad3f4973197fe7, type: 3}
   m_Name: Outlaw
   m_EditorClassIdentifier: 
+  movementStyle: 0
+  driftSpeed: 1
+  rotationSpeed: 20
+  jitterIntensity: 0.5
   itemName: Outlaw
   description: 'Dangeros crimenal.
 
@@ -20,6 +24,6 @@ MonoBehaviour:
   systemFoundAt: 4
   baseValue: 100
   targetPort: 0
-  cargoUnitsRequired: 5
+  cargoUnitsRequired: 1
   isHostile: 1
   passengerName: Frank

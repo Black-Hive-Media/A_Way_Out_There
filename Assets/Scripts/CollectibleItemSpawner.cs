@@ -16,6 +16,8 @@ public class CollectibleItemSpawner : MonoBehaviour
     public List<CollectibleItem> itemPool; // All possible ScriptableObjects
     public CollectibleItem.SolarSystemFound currentSystem;
 
+    public LayerMask layersToIgnore; // Set "MapBoundary" layer here in Inspector
+
     private Vector2 lastSpawnPosition;
 
     void Update()
@@ -41,9 +43,8 @@ public class CollectibleItemSpawner : MonoBehaviour
         // ONLY spawn if it is both off-screen AND not overlapping existing objects
         if (IsPositionOffScreen(spawnPos))
         {
-            // 3. Collision Check: Don't spawn if something is already there
-            if (!Physics2D.OverlapCircle(spawnPos, itemSpacingRadius))
-            {
+             if (!Physics2D.OverlapCircle(spawnPos, itemSpacingRadius))
+            { 
                 CollectibleItem selectedData = validItems[Random.Range(0, validItems.Count)];
                 SpawnItemWorldObject(selectedData, spawnPos);
             }

@@ -47,12 +47,7 @@ public class ItemWorldDisplay : MonoBehaviour
                 //Return this object to the pool so it can be reused
                 ItemPoolManager.Instance.ReleaseItem(this.gameObject);
             }
-            else
-            {
-                AI_Manager.Instance.TriggerMessage("CargoBayFull");
-            }
-
-
+            
         }
         
     }
