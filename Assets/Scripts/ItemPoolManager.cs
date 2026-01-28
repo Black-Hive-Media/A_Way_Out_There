@@ -6,12 +6,11 @@ public class ItemPoolManager : MonoBehaviour
     public static ItemPoolManager Instance { get; private set; }
 
     private ObjectPool<GameObject> asteroidPool;
-    private ObjectPool<GameObject> itemPool;
+    private ObjectPool<GameObject> itemPool; 
 
     [SerializeField] private GameObject[] asteroidPrefabs;
-    [SerializeField] private GameObject itemPrefab;
-
-    //[SerializeField] private GameObject[] itemPrefab;
+    [SerializeField] private GameObject itemPrefab; 
+     
     [SerializeField] private int defaultCapacity = 20;
     [SerializeField] private int maxPoolSize = 50;
 
@@ -30,6 +29,8 @@ public class ItemPoolManager : MonoBehaviour
             actionOnRelease: (obj) => obj.SetActive(false)
         );
 
+      
+
         // Initialize Item Pool
         itemPool = new ObjectPool<GameObject>(
             createFunc: () => Instantiate(itemPrefab),
@@ -38,37 +39,38 @@ public class ItemPoolManager : MonoBehaviour
         );
     }
     public GameObject GetAsteroid() => asteroidPool.Get();
-    public GameObject GetItem() => itemPool.Get();
+    public GameObject GetItem() => itemPool.Get(); 
+
 
     // Specific release methods so objects go to the right internal pool
     public void ReleaseAsteroid(GameObject obj) => asteroidPool.Release(obj);
-    public void ReleaseItem(GameObject obj) => itemPool.Release(obj);
+    public void ReleaseItem(GameObject obj) => itemPool.Release(obj); 
 
-/*
-    // Public method to access the pool
-    //public GameObject GetFromPool() => pool.Get();
-    public GameObject GetFromPool()
-    {
-        // If the pool is at max capacity and all are in use, 
-        // some implementations might return null or throw an error.
-        try
+    /*
+        // Public method to access the pool
+        //public GameObject GetFromPool() => pool.Get();
+        public GameObject GetFromPool()
         {
-            return pool.Get();
+            // If the pool is at max capacity and all are in use, 
+            // some implementations might return null or throw an error.
+            try
+            {
+                return pool.Get();
+            }
+            catch (System.Exception)
+            {
+                Debug.LogWarning("Pool Exhausted! AI is going to be snarky about this...");
+                return null;
+            }
         }
-        catch (System.Exception)
+        // Method for items to "despawn" themselves back to the pool
+        //public void ReturnToPool(GameObject obj) => pool.Release(obj);
+
+        public void ReturnToPool(GameObject obj)
         {
-            Debug.LogWarning("Pool Exhausted! AI is going to be snarky about this...");
-            return null;
-        }
-    }
-    // Method for items to "despawn" themselves back to the pool
-    //public void ReturnToPool(GameObject obj) => pool.Release(obj);
+            // Safety check for 2026: don't release if already in the pool
+            if (!obj.activeInHierarchy) return;
 
-    public void ReturnToPool(GameObject obj)
-    {
-        // Safety check for 2026: don't release if already in the pool
-        if (!obj.activeInHierarchy) return;
-
-        pool.Release(obj);
-    }*/
+            pool.Release(obj);
+        }*/
 }

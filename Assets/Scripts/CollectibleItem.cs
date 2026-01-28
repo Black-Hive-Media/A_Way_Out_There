@@ -25,6 +25,8 @@ public abstract class CollectibleItem : ScriptableObject//ShipItem
     [Range(1,5)]
     public int cargoUnitsRequired;
 
+    [Header("Hud Info")]
+    public GameObject prefabForHud;
     public enum DestinationPort
     {
         BountyPort,

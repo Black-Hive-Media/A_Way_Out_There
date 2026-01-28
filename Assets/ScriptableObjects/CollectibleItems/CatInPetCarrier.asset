@@ -23,5 +23,6 @@ MonoBehaviour:
   baseValue: 200
   targetPort: 0
   cargoUnitsRequired: 1
+  prefabForHud: {fileID: 4095492817828680091, guid: 3e266bd95e270c04a8ce0551a2108dd6, type: 3}
   isHostile: 0
   passengerName: Fuego

@@ -25,4 +25,5 @@ MonoBehaviour:
   baseValue: 400
   targetPort: 3
   cargoUnitsRequired: 1
+  prefabForHud: {fileID: 9066168658963401772, guid: 4a784662a2599ca458900a4b934b262d, type: 3}
   compatibleEngineType: 

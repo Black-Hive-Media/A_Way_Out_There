@@ -13,8 +13,8 @@ public class CargoManager : MonoBehaviour
     public TextMeshProUGUI cargoText;
     public GameObject cargoFullImg;
     public Image cargoFill;
+
     public Transform[] placeHolderIconPos;
-    public GameObject[] cargoItemPrefabs;
 
     private void Awake()
     {
@@ -72,6 +72,20 @@ public class CargoManager : MonoBehaviour
                 
             }
         }
+
+        //fill the icon in the hud now
+        SpawnHudIcon(newItem);
+    }
+
+    void SpawnHudIcon(CollectibleItem newItem)
+    {
+        // 1. Get from your ItemPoolManager (ensure  are in the pool array)
+        GameObject hudIcon = Instantiate(newItem.prefabForHud);
+
+        // 2. Position it off-screen
+        hudIcon.transform.position = placeHolderIconPos[cargoList.Count-1].position;
+
+        hudIcon.transform.SetParent(placeHolderIconPos[cargoList.Count-1]);
     }
     // Logic to sell ONE specific item by its index in the UI list
     public void SellSpecificItem(int index)

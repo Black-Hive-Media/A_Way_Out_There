@@ -25,5 +25,6 @@ MonoBehaviour:
   baseValue: 100
   targetPort: 0
   cargoUnitsRequired: 1
+  prefabForHud: {fileID: 5459454388754610453, guid: 20033f1ed3bdcf9478160a920d52eb28, type: 3}
   isHostile: 1
   passengerName: Frank

@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282c9a9789f0b9441b3fe796d156a2f4, type: 3}
   m_Name: VapoRub
   m_EditorClassIdentifier: 
+  movementStyle: 0
+  driftSpeed: 1
+  rotationSpeed: 20
+  jitterIntensity: 0.5
   itemName: VapoRub
   description: Helps you breath easier.
   icon: {fileID: 8149009158662877648, guid: 528977d7daeab05468be62ee370f20bc, type: 3}
@@ -19,4 +23,5 @@ MonoBehaviour:
   baseValue: 60
   targetPort: 1
   cargoUnitsRequired: 1
+  prefabForHud: {fileID: 9066168658963401772, guid: 4a784662a2599ca458900a4b934b262d, type: 3}
   isPerishable: 0
