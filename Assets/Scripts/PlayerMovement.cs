@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,7 +30,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isAtEdge = false; // The State Flag to prevent spam
 
-    public GameObject rocketFX;
+    bool hasShipMoved = false;
+    public GameObject thrusterFX;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -77,11 +79,9 @@ public class PlayerMovement : MonoBehaviour
         // We use a small epsilon (0.01) to account for joystick drift
         if (Mathf.Abs(thrustInput) < 0.01f && Mathf.Abs(turnInput) < 0.01f)
         {
+            hasShipMoved = false;
             idleTimer += Time.deltaTime; // Increment timer while idle
-            if (rocketFX.activeInHierarchy == true)
-            {
-                rocketFX.SetActive(false);
-            }
+            
             // 3. Trigger once after 10 seconds
             if (idleTimer >= idleThreshold && !hasTriggeredIdle)
             {
@@ -94,11 +94,25 @@ public class PlayerMovement : MonoBehaviour
             // 4. Reset everything if the player moves
             idleTimer = 0f;
             hasTriggeredIdle = false;
-            if (rocketFX.activeInHierarchy == false) 
+            hasShipMoved = true;
+        }
+
+        if (hasShipMoved == true)
+        {
+            if (thrusterFX.activeInHierarchy== false) 
             { 
-                rocketFX.SetActive(true); 
+                thrusterFX.SetActive(true);
             }
         }
+        else
+        {
+            if (thrusterFX.activeInHierarchy == true)
+            {
+                thrusterFX.SetActive(false);
+            }
+        }
+         
+        
 
     }
     void FixedUpdate()
