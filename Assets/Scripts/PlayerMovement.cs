@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isAtEdge = false; // The State Flag to prevent spam
 
-
+    public GameObject rocketFX;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -78,7 +78,10 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Abs(thrustInput) < 0.01f && Mathf.Abs(turnInput) < 0.01f)
         {
             idleTimer += Time.deltaTime; // Increment timer while idle
-
+            if (rocketFX.activeInHierarchy == true)
+            {
+                rocketFX.SetActive(false);
+            }
             // 3. Trigger once after 10 seconds
             if (idleTimer >= idleThreshold && !hasTriggeredIdle)
             {
@@ -91,6 +94,10 @@ public class PlayerMovement : MonoBehaviour
             // 4. Reset everything if the player moves
             idleTimer = 0f;
             hasTriggeredIdle = false;
+            if (rocketFX.activeInHierarchy == false) 
+            { 
+                rocketFX.SetActive(true); 
+            }
         }
 
     }

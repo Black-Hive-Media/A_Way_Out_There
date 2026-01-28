@@ -3863,6 +3863,7 @@ MonoBehaviour:
   minY: -37
   maxY: 37
   warningBuffer: 5
+  rocketFX: {fileID: 832391483}
 --- !u!1 &972673615
 GameObject:
   m_ObjectHideFlags: 0
