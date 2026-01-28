@@ -3118,6 +3118,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 455757950423506765, guid: dc08c78acb98fc24caeebbfc476548d2, type: 3}
+      propertyPath: cargoText
+      value: 
+      objectReference: {fileID: 154650776}
+    - target: {fileID: 455757950423506765, guid: dc08c78acb98fc24caeebbfc476548d2, type: 3}
       propertyPath: cargoList.Array.size
       value: 0
       objectReference: {fileID: 0}

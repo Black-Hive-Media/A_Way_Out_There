@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class CargoManager : MonoBehaviour
 {
     public static CargoManager Instance;
@@ -8,6 +9,8 @@ public class CargoManager : MonoBehaviour
     int currCapacity = 2;
 
     public List<CollectibleItem> cargoList = new List<CollectibleItem>();
+
+    public TextMeshProUGUI cargoText;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -21,6 +24,7 @@ public class CargoManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        cargoText.text = "Cargo Capacity: " + currCapacity;
     }
     public bool cargoCheck(CollectibleItem newItem) 
     {
@@ -59,6 +63,7 @@ public class CargoManager : MonoBehaviour
     {
         currCapacity += additionalUnits;
         AI_Manager.Instance.TriggerMessage("CargoUpgraded");
+        cargoText.text = "Cargo Capacity: " + currCapacity;
     }
 
 }
