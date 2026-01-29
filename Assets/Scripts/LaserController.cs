@@ -85,22 +85,7 @@ public class LaserController : MonoBehaviour
             UpdateBeamSprite(transform.position, maxPos); 
             impactEffect.SetActive(false);
         }
-    }
-
-   /* void UpdateBeamSprite(Vector3 start, Vector3 end)
-    {
-        // 1. Place the edge of the sprite exactly at the gun barrel
-        beamSprite.position = start;
-
-        // 2. Aim at the target
-        Vector3 dir = end - start;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        beamSprite.rotation = Quaternion.Euler(0, 0, angle);
-
-        // 3. Stretch: 1 unit of distance now equals 1 unit of scale
-        float distance = Vector3.Distance(start, end);
-        beamSprite.localScale = new Vector3(distance, beamThickness, 1f);
-    }*/
+    } 
     void UpdateBeamSprite(Vector3 start, Vector3 end)
     {
         //float distance = Vector2.Distance(start, end);

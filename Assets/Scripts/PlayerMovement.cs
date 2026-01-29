@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,6 +21,17 @@ public class PlayerMovement : MonoBehaviour
     private float idleTimer = 0f;
     private bool hasTriggeredIdle = false;
 
+    
+    [System.Serializable]
+    public struct ThrusterGroup
+    {
+        public ParticleSystem particles;
+        public AudioSource audio;
+    }
+    [Header("Thruster Visuals")]
+    public ThrusterGroup topLeft, topRight, bottomLeft, bottomRight;
+
+
     [Header("World Boundaries")]
     public float minX, maxX;
     public float minY, maxY;
@@ -30,8 +43,18 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isAtEdge = false; // The State Flag to prevent spam
 
-    bool hasShipMoved = false;
-    public GameObject thrusterFX;
+    bool shipMovedForward = false;
+
+    [System.Serializable]
+    public struct RocketGroup
+    {
+        public ParticleSystem[] particles;
+        public AudioSource audio;
+        public GameObject rocketToggleObj;
+    }
+    [Header("Rocket Visuals")]
+    public RocketGroup rocketFX;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -39,11 +62,11 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(ControlsHelp());
     }
 
-    IEnumerator ControlsHelp() 
+    IEnumerator ControlsHelp()
     {
         yield return new WaitForSeconds(3f);
         AI_Manager.Instance.TriggerMessage("Basic Movement Controls");
-       
+
     }
 
     void LateUpdate() // Use LateUpdate to ensure this runs after movement code
@@ -72,16 +95,16 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        thrustInput = Input.GetAxis("Vertical");
-        turnInput = Input.GetAxis("Horizontal");
+        thrustInput = UnityEngine.Input.GetAxis("Vertical");
+        turnInput = UnityEngine.Input.GetAxis("Horizontal");
 
         // 2. Check for "Zero" input (Idle)
         // We use a small epsilon (0.01) to account for joystick drift
         if (Mathf.Abs(thrustInput) < 0.01f && Mathf.Abs(turnInput) < 0.01f)
         {
-            hasShipMoved = false;
-            idleTimer += Time.deltaTime; // Increment timer while idle
             
+            idleTimer += Time.deltaTime; // Increment timer while idle
+
             // 3. Trigger once after 10 seconds
             if (idleTimer >= idleThreshold && !hasTriggeredIdle)
             {
@@ -94,26 +117,8 @@ public class PlayerMovement : MonoBehaviour
             // 4. Reset everything if the player moves
             idleTimer = 0f;
             hasTriggeredIdle = false;
-            hasShipMoved = true;
+            
         }
-
-        if (hasShipMoved == true)
-        {
-            if (thrusterFX.activeInHierarchy== false) 
-            { 
-                thrusterFX.SetActive(true);
-            }
-        }
-        else
-        {
-            if (thrusterFX.activeInHierarchy == true)
-            {
-                thrusterFX.SetActive(false);
-            }
-        }
-         
-        
-
     }
     void FixedUpdate()
     {
@@ -123,9 +128,82 @@ public class PlayerMovement : MonoBehaviour
         // Apply torque (rotation)
         rb.AddTorque(-turnInput * turnSpeed);
     }
-
     public void Move(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+        // Horizontal Logic
+        ToggleThruster(topRight, moveInput.x < 0);
+        ToggleThruster(bottomRight, moveInput.x < 0);
+        ToggleThruster(topLeft, moveInput.x > 0);
+        ToggleThruster(bottomLeft, moveInput.x > 0);
+
+        // Vertical Logic (Forward/Backward)
+        if (moveInput.y > 0) // Moving Forward
+        {
+            //ToggleThruster(bottomLeft, true);
+           // ToggleThruster(bottomRight, true);
+            
+        }
+        else if (moveInput.y < 0) // Moving Backward
+        {
+            ToggleThruster(topLeft, true);
+            ToggleThruster(topRight, true);
+        }
+         
+        
+        if (moveInput.y > 0)
+        {
+            if (shipMovedForward == false) 
+            {
+                shipMovedForward = true;
+                ToggleRocketFX(rocketFX, true);
+            }
+            
+        }
+        else
+        {
+            if (shipMovedForward == true)
+            {
+                shipMovedForward = false;
+                ToggleRocketFX(rocketFX, false);
+            }
+        }
+         
     }
+    private void ToggleThruster(ThrusterGroup group, bool shouldPlay)
+    {
+        if (shouldPlay)
+        {
+            if (!group.particles.isEmitting) group.particles.Play(); //
+            if (!group.audio.isPlaying) group.audio.Play(); //
+        }
+        else
+        {
+            group.particles.Stop(); // Stops emission; existing particles linger
+            group.audio.Stop();
+        }
+    }
+    private void ToggleRocketFX(RocketGroup group, bool shouldPlay)
+    {
+        if (shouldPlay)
+        {
+            for (int i = 0; i < group.particles.Length; i++) 
+            {
+                if (!group.particles[i].isEmitting) group.particles[i].Play();
+            } //
+            if (!group.audio.isPlaying) group.audio.Play(); //
+            if (!group.rocketToggleObj.activeInHierarchy) group.rocketToggleObj.SetActive(true); //
+        }
+        else
+        {
+            for (int i = 0; i < group.particles.Length; i++)
+            {
+                group.particles[i].Stop(); // Stops emission; existing particles linger
+            }
+            
+            group.audio.Stop();
+            group.rocketToggleObj.SetActive(false);
+        }
+    }
+
 }
