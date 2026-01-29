@@ -66,9 +66,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // 3. Enforcement: Hard clamp the physical movement
-        pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
-        transform.position = pos;
+        //pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        //pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        //transform.position = pos;
     }
     private void Update()
     {

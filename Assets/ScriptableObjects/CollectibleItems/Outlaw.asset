@@ -20,7 +20,7 @@ MonoBehaviour:
   description: 'Dangeros crimenal.
 
 '
-  icon: {fileID: 8149009158662877648, guid: 528977d7daeab05468be62ee370f20bc, type: 3}
+  icon: {fileID: 7317262202171141254, guid: 9ed729364e3f4c7438c1458a1f282576, type: 3}
   systemFoundAt: 4
   baseValue: 100
   targetPort: 0

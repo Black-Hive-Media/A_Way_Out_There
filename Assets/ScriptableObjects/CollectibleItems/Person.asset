@@ -18,7 +18,7 @@ MonoBehaviour:
   jitterIntensity: 0.5
   itemName: Person
   description: Missing person.
-  icon: {fileID: 8149009158662877648, guid: 528977d7daeab05468be62ee370f20bc, type: 3}
+  icon: {fileID: 6921352137407293370, guid: a86e372e7ca38d7459557c309ea73403, type: 3}
   systemFoundAt: 2
   baseValue: 300
   targetPort: 0

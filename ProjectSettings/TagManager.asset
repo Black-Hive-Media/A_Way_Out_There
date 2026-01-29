@@ -7,6 +7,7 @@ TagManager:
   - Asteroid
   - FxTemporaire
   - MapBoundary
+  - Collectible
   layers:
   - Default
   - TransparentFX

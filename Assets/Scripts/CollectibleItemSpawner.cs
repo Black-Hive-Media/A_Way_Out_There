@@ -17,21 +17,23 @@ public class CollectibleItemSpawner : MonoBehaviour
     public CollectibleItem.SolarSystemFound currentSystem;
 
     public LayerMask layersToIgnore; // Set "MapBoundary" layer here in Inspector
+    [Header("Safe Zone Settings")]
+    public Collider2D mapBoundary; // Drag your Polygon/Composite Collider here
+    public int maxSpawnAttempts = 10; // Failsafe to prevent infinite loops
 
     private Vector2 lastSpawnPosition;
 
     void Update()
     {
         float distanceMoved = Vector2.Distance(ship.transform.position, lastSpawnPosition);
-        //Debug.Log(distanceMoved + " dist moved " + "  >= " + distanceBetweenSpawnChecks);
-        if (distanceMoved >= distanceBetweenSpawnChecks)
+          if (distanceMoved >= distanceBetweenSpawnChecks)
         {
             TrySpawnItem();
             lastSpawnPosition = transform.position;
         }
     }
 
-    void TrySpawnItem()
+   /* void TrySpawnItem()
     {
         // 1. Filter items valid for THIS solar system
         var validItems = itemPool.FindAll(i => i.systemFoundAt == currentSystem);
@@ -43,14 +45,53 @@ public class CollectibleItemSpawner : MonoBehaviour
         // ONLY spawn if it is both off-screen AND not overlapping existing objects
         if (IsPositionOffScreen(spawnPos))
         {
-             if (!Physics2D.OverlapCircle(spawnPos, itemSpacingRadius))
-            { 
+            Collider2D hit = Physics2D.OverlapCircle(spawnPos, itemSpacingRadius, ~layersToIgnore);
+
+            if (hit == null)
+            {
+                // Found something that is NOT a MapBoundary
+           // }
+            //if (!Physics2D.OverlapCircle(spawnPos, itemSpacingRadius))
+            //{ 
                 CollectibleItem selectedData = validItems[Random.Range(0, validItems.Count)];
                 SpawnItemWorldObject(selectedData, spawnPos);
             }
         }
-    }
+    }*/
+    void TrySpawnItem()
+    {
+        Vector2 spawnPos = Vector2.zero;
+        bool isValid = false;
+        int attempts = 0;
 
+        // 1. Loop until we find a spot inside the boundary
+        while (!isValid && attempts < maxSpawnAttempts)
+        {
+            attempts++;
+
+            // Pick a random spot (using your existing circular/distance logic)
+            spawnPos = (Vector2)transform.position + (Random.insideUnitCircle.normalized *
+                       Random.Range(minDistanceFromPlayer, maxDistanceFromPlayer));
+
+            // 2. CHECK: Is this specific point inside the map's collider?
+            // Note: For CompositeColliders, set "Geometry Type" to "Polygons" for this to work.
+            if (mapBoundary.OverlapPoint(spawnPos))
+            {
+                // 3. SECOND CHECK: Is it clear of other asteroids/items?
+                if (!Physics2D.OverlapCircle(spawnPos, itemSpacingRadius, ~layersToIgnore))
+                {
+                    isValid = true;
+                }
+            }
+        }
+
+        // 4. Success? Spawn it.
+        if (isValid)
+        {
+            CollectibleItem selectedData = itemPool[Random.Range(0, itemPool.Count)];
+            SpawnItemWorldObject(selectedData, spawnPos);
+        }
+    }
     private bool IsPositionOffScreen(Vector2 worldPosition)
     {
         // Convert the world position (e.g., 50, 20) to a Viewport point (e.g., 1.2, 0.5)
