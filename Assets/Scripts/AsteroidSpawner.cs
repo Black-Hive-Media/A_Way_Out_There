@@ -35,6 +35,7 @@ public class AsteroidSpawner : MonoBehaviour
             TrySpawnItem();
             lastSpawnPosition = transform.position;
         }
+         
     }
     /*IEnumerator MaintainPopulation()
     {
@@ -75,7 +76,7 @@ public class AsteroidSpawner : MonoBehaviour
             attempts++;
 
             // Pick a random spot (using your existing circular/distance logic)
-            spawnPos = (Vector2)transform.position + (Random.insideUnitCircle.normalized *
+            spawnPos = (Vector2)ship.transform.position + (Random.insideUnitCircle.normalized *
                        Random.Range(minDistanceFromPlayer, maxDistanceFromPlayer));
              
             // 2. CHECK: Is this specific point inside the map's collider?
@@ -105,5 +106,16 @@ public class AsteroidSpawner : MonoBehaviour
         {
             // AI Snark: "Sector density too high. Deployment failed."
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        // Draws the inner "No-Spawn" zone
+        Gizmos.DrawWireSphere(ship.transform.position, minDistanceFromPlayer);
+
+        Gizmos.color = Color.red;
+        // Draws the outer "Spawn Limit" zone
+        Gizmos.DrawWireSphere(ship.transform.position, maxDistanceFromPlayer);
     }
 }

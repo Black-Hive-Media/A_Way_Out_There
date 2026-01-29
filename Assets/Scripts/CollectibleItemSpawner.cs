@@ -26,38 +26,38 @@ public class CollectibleItemSpawner : MonoBehaviour
     void Update()
     {
         float distanceMoved = Vector2.Distance(ship.transform.position, lastSpawnPosition);
-          if (distanceMoved >= distanceBetweenSpawnChecks)
+        if (distanceMoved >= distanceBetweenSpawnChecks)
         {
             TrySpawnItem();
             lastSpawnPosition = transform.position;
         }
     }
 
-   /* void TrySpawnItem()
-    {
-        // 1. Filter items valid for THIS solar system
-        var validItems = itemPool.FindAll(i => i.systemFoundAt == currentSystem);
-        if (validItems.Count == 0) return;
+    /* void TrySpawnItem()
+     {
+         // 1. Filter items valid for THIS solar system
+         var validItems = itemPool.FindAll(i => i.systemFoundAt == currentSystem);
+         if (validItems.Count == 0) return;
 
-        // 2. Calculate a random point in a "cone" or "ring" ahead of the player
-        Vector2 spawnPos = (Vector2)transform.position + (Random.insideUnitCircle.normalized *
-                           Random.Range(minDistanceFromPlayer, maxDistanceFromPlayer));
-        // ONLY spawn if it is both off-screen AND not overlapping existing objects
-        if (IsPositionOffScreen(spawnPos))
-        {
-            Collider2D hit = Physics2D.OverlapCircle(spawnPos, itemSpacingRadius, ~layersToIgnore);
+         // 2. Calculate a random point in a "cone" or "ring" ahead of the player
+         Vector2 spawnPos = (Vector2)transform.position + (Random.insideUnitCircle.normalized *
+                            Random.Range(minDistanceFromPlayer, maxDistanceFromPlayer));
+         // ONLY spawn if it is both off-screen AND not overlapping existing objects
+         if (IsPositionOffScreen(spawnPos))
+         {
+             Collider2D hit = Physics2D.OverlapCircle(spawnPos, itemSpacingRadius, ~layersToIgnore);
 
-            if (hit == null)
-            {
-                // Found something that is NOT a MapBoundary
-           // }
-            //if (!Physics2D.OverlapCircle(spawnPos, itemSpacingRadius))
-            //{ 
-                CollectibleItem selectedData = validItems[Random.Range(0, validItems.Count)];
-                SpawnItemWorldObject(selectedData, spawnPos);
-            }
-        }
-    }*/
+             if (hit == null)
+             {
+                 // Found something that is NOT a MapBoundary
+            // }
+             //if (!Physics2D.OverlapCircle(spawnPos, itemSpacingRadius))
+             //{ 
+                 CollectibleItem selectedData = validItems[Random.Range(0, validItems.Count)];
+                 SpawnItemWorldObject(selectedData, spawnPos);
+             }
+         }
+     }*/
     void TrySpawnItem()
     {
         Vector2 spawnPos = Vector2.zero;
@@ -70,7 +70,7 @@ public class CollectibleItemSpawner : MonoBehaviour
             attempts++;
 
             // Pick a random spot (using your existing circular/distance logic)
-            spawnPos = (Vector2)transform.position + (Random.insideUnitCircle.normalized *
+            spawnPos = (Vector2)ship.transform.position + (Random.insideUnitCircle.normalized *
                        Random.Range(minDistanceFromPlayer, maxDistanceFromPlayer));
 
             // 2. CHECK: Is this specific point inside the map's collider?

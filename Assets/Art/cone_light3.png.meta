@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      cone_light3_0: 936506482157636371
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static MiningLaserStats;
@@ -14,7 +15,14 @@ public class LaserController : MonoBehaviour
     private bool isFiring = false;
     [Header("Visuals")]
     [SerializeField] private LineRenderer beamLine;
+
     [SerializeField] private float maxBeamDistance = 10f;
+    [Header("Impact Visuals")]
+    [SerializeField] private GameObject impactEffect;
+    [Header("Sprite Core Visual")]
+    [SerializeField] private GameObject beamParent;
+    [SerializeField] private Transform beamSprite; // The Transform of your Core Sprite
+    [SerializeField] private float beamThickness = 0.5f;
     void Update()
     {
         if (isFiring)
@@ -24,8 +32,9 @@ public class LaserController : MonoBehaviour
         else
         {
             beamLine.enabled = false;
+            beamParent.SetActive(false);
         }
-        
+
     }
     public void UpdateLaserTier(MiningLaserStats newStats)
     {
@@ -35,6 +44,7 @@ public class LaserController : MonoBehaviour
     }
     void UpdateLaserVisuals()
     {
+        beamParent.SetActive(true);
         beamLine.enabled = true;
 
         // 1. Get our "Wobbly" direction from the method we wrote earlier
@@ -45,13 +55,22 @@ public class LaserController : MonoBehaviour
 
         // 3. Set the start of the line (The ship's gun)
         beamLine.SetPosition(0, transform.position);
+        
 
         // 4. Set the end of the line
         if (hit.collider != null)
         {
-            // Stop at the object we hit
             beamLine.SetPosition(1, hit.point);
-            
+            // Stop at the object we hit
+            impactEffect.transform.position = hit.point;
+
+            // 2. Rotate it to face away from the surface (using the Normal)
+            // This makes sparks fly OUT of the asteroid
+            impactEffect.transform.up = hit.normal;
+
+            impactEffect.SetActive(true);
+
+            UpdateBeamSprite(transform.position, hit.point);
             // Tier 1 Logic: Actually mine the target
             if (hit.collider.gameObject != null) 
             {
@@ -63,7 +82,46 @@ public class LaserController : MonoBehaviour
             // If we hit nothing, draw the beam to its maximum range
             Vector3 maxPos = (Vector3)((Vector2)transform.position + (direction * maxBeamDistance));
             beamLine.SetPosition(1, maxPos);
+            UpdateBeamSprite(transform.position, maxPos); 
+            impactEffect.SetActive(false);
         }
+    }
+
+   /* void UpdateBeamSprite(Vector3 start, Vector3 end)
+    {
+        // 1. Place the edge of the sprite exactly at the gun barrel
+        beamSprite.position = start;
+
+        // 2. Aim at the target
+        Vector3 dir = end - start;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        beamSprite.rotation = Quaternion.Euler(0, 0, angle);
+
+        // 3. Stretch: 1 unit of distance now equals 1 unit of scale
+        float distance = Vector3.Distance(start, end);
+        beamSprite.localScale = new Vector3(distance, beamThickness, 1f);
+    }*/
+    void UpdateBeamSprite(Vector3 start, Vector3 end)
+    {
+        //float distance = Vector2.Distance(start, end);
+        float distance = Vector2.Distance(start, end) * 1.25f;
+
+        // 1. Get the sprite's actual width in world units at scale 1
+        float spriteWidth = beamSprite.GetComponent<SpriteRenderer>().sprite.bounds.size.x;
+
+        // 2. Calculate the normalized scale: Distance divided by Width
+        float targetScaleX = distance / (spriteWidth);
+
+        // 3. Apply the normalized scale
+        beamSprite.localScale = new Vector3(targetScaleX, beamThickness, 1f);
+
+        // Position and rotation remain at start/pivot
+        beamSprite.position = start;
+
+        Vector3 dir = end - start;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        beamSprite.rotation = Quaternion.Euler(0, 0, angle);
+
     }
     private Vector2 ApplyWobble(Vector2 originalDirection, float wobbleIntensity)
     {
