@@ -120,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
             
         }
     }
+    
     void FixedUpdate()
     {
         // Apply forward/backward force based on rotation
@@ -130,6 +131,12 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Move(InputAction.CallbackContext context)
     {
+        // If an item is attached, ignore all new movement input
+       /* if (tractorBeamScript.isBeaming && tractorBeamScript.attachedItem != null)
+        {
+            return;
+        }*/
+
         moveInput = context.ReadValue<Vector2>();
         // Horizontal Logic
         ToggleThruster(topRight, moveInput.x < 0);

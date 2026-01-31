@@ -37,16 +37,17 @@ public class ItemWorldDisplay : MonoBehaviour
     // Trigger collection logic
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("TractorBeam"))
         {
-            if (CargoManager.Instance.cargoCheck(itemData) == true)
+            /*if (CargoManager.Instance.cargoCheck(itemData) == true)
             {
+                collision.gameObject.GetComponent<TractorBeam>()
 
                 OnItemPickup(itemData);
 
                 //Return this object to the pool so it can be reused
                 ItemPoolManager.Instance.ReleaseItem(this.gameObject);
-            }
+            }*/
             
         }
         
