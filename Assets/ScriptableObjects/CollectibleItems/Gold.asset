@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d63c7896e2a56b4cac5c2f118951fb4, type: 3}
   m_Name: Gold
   m_EditorClassIdentifier: 
-  movementStyle: 0
-  driftSpeed: 1
-  rotationSpeed: 20
+  movementStyle: 1
+  driftSpeed: 0.5
+  rotationSpeed: 5
   jitterIntensity: 0.5
   itemName: Gold
   description: 'Used to repair the scanner.

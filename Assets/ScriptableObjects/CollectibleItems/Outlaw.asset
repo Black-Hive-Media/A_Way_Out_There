@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Outlaw
   m_EditorClassIdentifier: 
   movementStyle: 4
-  driftSpeed: 1
-  rotationSpeed: 20
+  driftSpeed: 0.5
+  rotationSpeed: 5
   jitterIntensity: 0.5
   itemName: Outlaw
   description: 'Dangeros crimenal.

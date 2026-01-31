@@ -96,7 +96,7 @@ public class ItemWorldDisplay : MonoBehaviour
                 {
                     Vector2 burst = Random.insideUnitCircle * 5f;
                     rb.AddForce(burst, ForceMode2D.Impulse);
-                    AI_Manager.Instance.TriggerMessage("PassengerResisting");
+                    
                 }
                 break;
 

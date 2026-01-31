@@ -80,7 +80,7 @@ public class CollectibleItemSpawner : MonoBehaviour
         
         // 2. Access the ItemWorldDisplay component to inject the ScriptableObject data
         ItemWorldDisplay display = itemObj.GetComponent<ItemWorldDisplay>();
-        Debug.Log(itemObj.name + "  " + data.visualPrefab.ToString());
+        //Debug.Log(itemObj.name + "  " + data.visualPrefab.ToString());
 
         if (display != null)
         {

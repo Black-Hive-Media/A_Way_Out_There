@@ -151,12 +151,12 @@ public class AsteroidHandler : MonoBehaviour, IMineable
         //}
 
         // Add a "scatter" effect so they don't just stack in one spot
-        /*Rigidbody2D rb = itemObj.GetComponent<Rigidbody2D>();
+        Rigidbody2D rb = itemObj.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             Vector2 randomDir = Random.insideUnitCircle.normalized;
             rb.AddForce(randomDir * scatterForce, ForceMode2D.Impulse);
-        }*/
+        }
     }
 
 }

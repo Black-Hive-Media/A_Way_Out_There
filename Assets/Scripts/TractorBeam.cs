@@ -124,6 +124,10 @@ public class TractorBeam : MonoBehaviour
     }
     void ApplyWarningShake(float intensity)
     {
+        if (attachedItem.GetComponent<ItemWorldDisplay>().itemData.movementStyle == CollectibleItem.MovementStyle.ErraticThruster) 
+        {
+            AI_Manager.Instance.TriggerMessage("PassengerResisting");
+        }
         // Apply a random jitter offset to the local position
         Vector3 shakeOffset = (Vector3)Random.insideUnitCircle * shakeIntensity * intensity;
         attachedItem.transform.localPosition = (Vector3)localBeamTip + shakeOffset;
@@ -198,6 +202,7 @@ public class TractorBeam : MonoBehaviour
         }
         else
         {
+            
             // DRIFTING BACK TO TIP
             attachedItem.transform.localPosition = Vector2.MoveTowards(
                 attachedItem.transform.localPosition,

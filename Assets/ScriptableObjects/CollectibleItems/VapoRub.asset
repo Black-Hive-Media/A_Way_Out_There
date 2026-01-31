@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282c9a9789f0b9441b3fe796d156a2f4, type: 3}
   m_Name: VapoRub
   m_EditorClassIdentifier: 
-  movementStyle: 0
-  driftSpeed: 1
-  rotationSpeed: 20
+  movementStyle: 2
+  driftSpeed: 0.5
+  rotationSpeed: 5
   jitterIntensity: 0.5
   itemName: VapoRub
   description: Helps you breath easier.
