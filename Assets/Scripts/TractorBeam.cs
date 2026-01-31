@@ -161,11 +161,7 @@ public class TractorBeam : MonoBehaviour
             }
            
         }
-         
 
-        
-
-        
         if (isBeaming)
         {
             Rigidbody2D itemRb = attachedItem.GetComponent<Rigidbody2D>();
@@ -217,7 +213,6 @@ public class TractorBeam : MonoBehaviour
         ItemWorldDisplay data = item.GetComponent<ItemWorldDisplay>();
 
         // 2. Add to your ship's inventory system
-        
         if (CargoManager.Instance.cargoCheck(data.itemData) == true)
         {
             data.OnItemPickup(data.itemData);
@@ -227,7 +222,6 @@ public class TractorBeam : MonoBehaviour
         }
         // 3. Clean up
         ReleaseBeam();
-       
 
         // 4. Feedback (Optional)
         // PlaySound(collectionSFX);
@@ -239,6 +233,9 @@ public class TractorBeam : MonoBehaviour
         {
             return;
         }
+
+        if (itemsInRange.Count >= 1 ) { return; }
+
         float maxBeamWidth = beamPoly.bounds.size.x;
 
         if (other.CompareTag("Collectible"))
@@ -388,20 +385,26 @@ public class TractorBeam : MonoBehaviour
 
     private void ReleaseItemsInBeam()
     {
-        for (int i = 0; itemsInRange.Count > 0; i++) 
+        if (attachedItem != null)
         {
-            itemsInRange[i].transform.parent = null;
+            attachedItem.transform.SetParent(null, true);
+
+            attachedItem = null;
+
+        }
+        for (int i = 0;  i < itemsInRange.Count; i++)
+        {
+            itemsInRange[i].transform.SetParent(null, false);
+
             Rigidbody2D itemRb = itemsInRange[i].GetComponent<Rigidbody2D>();
             Vector2 directionFromPlayer = (itemsInRange[i].transform.position - transform.position).normalized;
             itemRb.bodyType = RigidbodyType2D.Dynamic;
             itemRb.AddForce(directionFromPlayer * 100f); // Send item spiraling into space
             itemRb.AddTorque(100f);
+
+            itemsInRange.RemoveAt(i);
         }
-        if (attachedItem != null)
-        {
-            attachedItem = null;
-            
-        }
+        
 
     }
 }
