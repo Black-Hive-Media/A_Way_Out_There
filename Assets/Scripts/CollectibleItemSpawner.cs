@@ -33,31 +33,6 @@ public class CollectibleItemSpawner : MonoBehaviour
         }
     }
 
-    /* void TrySpawnItem()
-     {
-         // 1. Filter items valid for THIS solar system
-         var validItems = itemPool.FindAll(i => i.systemFoundAt == currentSystem);
-         if (validItems.Count == 0) return;
-
-         // 2. Calculate a random point in a "cone" or "ring" ahead of the player
-         Vector2 spawnPos = (Vector2)transform.position + (Random.insideUnitCircle.normalized *
-                            Random.Range(minDistanceFromPlayer, maxDistanceFromPlayer));
-         // ONLY spawn if it is both off-screen AND not overlapping existing objects
-         if (IsPositionOffScreen(spawnPos))
-         {
-             Collider2D hit = Physics2D.OverlapCircle(spawnPos, itemSpacingRadius, ~layersToIgnore);
-
-             if (hit == null)
-             {
-                 // Found something that is NOT a MapBoundary
-            // }
-             //if (!Physics2D.OverlapCircle(spawnPos, itemSpacingRadius))
-             //{ 
-                 CollectibleItem selectedData = validItems[Random.Range(0, validItems.Count)];
-                 SpawnItemWorldObject(selectedData, spawnPos);
-             }
-         }
-     }*/
     void TrySpawnItem()
     {
         Vector2 spawnPos = Vector2.zero;
@@ -91,18 +66,6 @@ public class CollectibleItemSpawner : MonoBehaviour
             CollectibleItem selectedData = itemPool[Random.Range(0, itemPool.Count)];
             SpawnItemWorldObject(selectedData, spawnPos);
         }
-    }
-    private bool IsPositionOffScreen(Vector2 worldPosition)
-    {
-        // Convert the world position (e.g., 50, 20) to a Viewport point (e.g., 1.2, 0.5)
-        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(worldPosition);
-
-        // If X or Y are outside the 0-1 range, it is off-screen.
-        // We add a small 'padding' (0.1f) so items don't pop in at the very edge.
-        bool isOffScreen = viewportPoint.x < -0.1f || viewportPoint.x > 1.1f ||
-                           viewportPoint.y < -0.1f || viewportPoint.y > 1.1f;
-
-        return isOffScreen;
     }
     void SpawnItemWorldObject(CollectibleItem data, Vector2 position)
     {

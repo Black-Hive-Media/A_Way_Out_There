@@ -400,13 +400,7 @@ public class TractorBeam : MonoBehaviour
         if (attachedItem != null)
         {
             attachedItem = null;
-            /*attachedItem.transform.SetParent(null);
-            Rigidbody2D itemRb = attachedItem.GetComponent<Rigidbody2D>();
-            Vector2 directionFromPlayer = (attachedItem.transform.position - transform.position).normalized;
-            itemRb.bodyType = RigidbodyType2D.Dynamic;
-            itemRb.AddForce(directionFromPlayer * 100f); // Send item spiraling into space
-            itemRb.AddTorque(100f);
-            attachedItem = null;*/
+            
         }
 
     }

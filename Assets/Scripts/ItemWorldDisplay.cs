@@ -11,11 +11,19 @@ public class ItemWorldDisplay : MonoBehaviour
     private Rigidbody2D rb; 
     private float seed;
     private GameObject newVisuals;
+
+   
     /// <summary>
     /// This is called by the Spawner immediately after getting the object from the pool.
     /// </summary>
+    ///
     public void Setup(CollectibleItem data, GameObject parent)
     {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         //Debug.Log(parent.name + "  " + data.name);
         itemData = data;
         rb = GetComponent<Rigidbody2D>();
@@ -24,21 +32,20 @@ public class ItemWorldDisplay : MonoBehaviour
         // Initial "nudge" into space
         rb.linearVelocity = Random.insideUnitCircle * itemData.driftSpeed;
         rb.angularVelocity = Random.Range(-itemData.rotationSpeed, itemData.rotationSpeed);
+       
+        if (data.visualPrefab != null)
+        {
+            GameObject visual = Instantiate(data.visualPrefab, transform);
 
+            // 3. Reset local position/rotation to align with the parent
+            visual.transform.localPosition = Vector3.zero;
+            visual.transform.localRotation = Quaternion.identity;
+        }
         // Update the visuals based on the ScriptableObject
         /*if (spriteRenderer != null && data.visualPrefab != null)
         {
             spriteRenderer.sprite = data.visualPrefab;
         }*/
-        if (newVisuals == null) 
-        {
-            Vector3 pos = new Vector3(0, 0, 0);
-            Quaternion rot = parent.transform.rotation;
-            newVisuals = GameObject.Instantiate(data.visualPrefab, pos, rot);
-            newVisuals.transform.SetParent(parent.transform, false);
-            //Debug.Log(data.visualPrefab.ToString() + "   " + data.itemName + "  " + newVisuals.gameObject.name);
-        }
-        Debug.Log(data.visualPrefab.ToString() + "   " + data.itemName + "  " + newVisuals.gameObject.name);
 
 
         // Optional: Update the name of the object for easier debugging
