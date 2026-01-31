@@ -1,21 +1,22 @@
+using UnityEditor.VersionControl;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using static CollectibleItem;
 
 public class ItemWorldDisplay : MonoBehaviour
 {
-    // The visual/physical components on your prefab
-    [SerializeField] private SpriteRenderer spriteRenderer;
 
     // The actual data reference for this specific instance
     public CollectibleItem itemData { get; private set; }
     private Rigidbody2D rb; 
     private float seed;
+    private GameObject newVisuals;
     /// <summary>
     /// This is called by the Spawner immediately after getting the object from the pool.
     /// </summary>
-    public void Setup(CollectibleItem data)
+    public void Setup(CollectibleItem data, GameObject parent)
     {
+        //Debug.Log(parent.name + "  " + data.name);
         itemData = data;
         rb = GetComponent<Rigidbody2D>();
         seed = Random.value * 100f; // Unique seed for Perlin noise
@@ -25,32 +26,23 @@ public class ItemWorldDisplay : MonoBehaviour
         rb.angularVelocity = Random.Range(-itemData.rotationSpeed, itemData.rotationSpeed);
 
         // Update the visuals based on the ScriptableObject
-        if (spriteRenderer != null && data.icon != null)
+        /*if (spriteRenderer != null && data.visualPrefab != null)
         {
-            spriteRenderer.sprite = data.icon;
+            spriteRenderer.sprite = data.visualPrefab;
+        }*/
+        if (newVisuals == null) 
+        {
+            Vector3 pos = new Vector3(0, 0, 0);
+            Quaternion rot = parent.transform.rotation;
+            newVisuals = GameObject.Instantiate(data.visualPrefab, pos, rot);
+            newVisuals.transform.SetParent(parent.transform, false);
+            //Debug.Log(data.visualPrefab.ToString() + "   " + data.itemName + "  " + newVisuals.gameObject.name);
         }
+        Debug.Log(data.visualPrefab.ToString() + "   " + data.itemName + "  " + newVisuals.gameObject.name);
+
 
         // Optional: Update the name of the object for easier debugging
         gameObject.name = $"Item_{data.itemName}";
-    }
-
-    // Trigger collection logic
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("TractorBeam"))
-        {
-            /*if (CargoManager.Instance.cargoCheck(itemData) == true)
-            {
-                collision.gameObject.GetComponent<TractorBeam>()
-
-                OnItemPickup(itemData);
-
-                //Return this object to the pool so it can be reused
-                ItemPoolManager.Instance.ReleaseItem(this.gameObject);
-            }*/
-            
-        }
-        
     }
 
     public void OnItemPickup(CollectibleItem newItem)
@@ -68,6 +60,8 @@ public class ItemWorldDisplay : MonoBehaviour
     void FixedUpdate()
     {
         if (itemData == null) return;
+        //if there is a parent, then we don't need movement
+        if (gameObject.transform.parent != null) { return; }
 
         switch (itemData.movementStyle)
         {

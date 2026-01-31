@@ -114,12 +114,14 @@ public class CollectibleItemSpawner : MonoBehaviour
         GameObject itemObj = ItemPoolManager.Instance.GetItem();
         itemObj.transform.position = position;
 
+        
         // 2. Access the ItemWorldDisplay component to inject the ScriptableObject data
         ItemWorldDisplay display = itemObj.GetComponent<ItemWorldDisplay>();
+        Debug.Log(itemObj.name + "  " + data.visualPrefab.ToString());
 
         if (display != null)
         {
-            display.Setup(data);
+            display.Setup(data, itemObj);
         }
     }
 }

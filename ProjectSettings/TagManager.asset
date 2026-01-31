@@ -9,6 +9,7 @@ TagManager:
   - MapBoundary
   - Collectible
   - TractorBeam
+  - SpacePort
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Asteroid
   - MapBoundary
   - TractorBeam
-  - 
+  - SpacePort
   - 
   - 
   - 

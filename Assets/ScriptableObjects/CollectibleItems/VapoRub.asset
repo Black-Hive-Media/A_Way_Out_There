@@ -18,7 +18,7 @@ MonoBehaviour:
   jitterIntensity: 0.5
   itemName: VapoRub
   description: Helps you breath easier.
-  icon: {fileID: -6074584551248127444, guid: cb0f57d3c8cd7d54e97ef6efa2d975f0, type: 3}
+  visualPrefab: {fileID: 7963463850076906481, guid: 448a1db7f36797d4eacfc6801e5f1891, type: 3}
   systemFoundAt: 1
   baseValue: 60
   targetPort: 1

@@ -101,7 +101,6 @@ public class TractorBeam : MonoBehaviour
     }
     void Update()
     {
-
         ManageHeat(isBeaming);
 
         // Update UI
@@ -135,13 +134,17 @@ public class TractorBeam : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
+        if (isDeployed == false)
+        {
+            return;
+        }
         if (attachedItem == null) { return; }
         
         bool isAtTip = attachedItem.transform.localPosition == (Vector3)localBeamTip;
 
         if (!isBeaming && isAtTip)
         {
-            Debug.Log(idleTimer + "   not beam and at tip" + maxIdleTime * shakeThreshold);
+            //Debug.Log(idleTimer + "   not beam and at tip" + maxIdleTime * shakeThreshold);
             // Item is idle at the tip, start the countdown
             idleTimer += Time.deltaTime;
             // Start shaking if we are past the threshold
@@ -232,6 +235,10 @@ public class TractorBeam : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (isDeployed == false)
+        {
+            return;
+        }
         float maxBeamWidth = beamPoly.bounds.size.x;
 
         if (other.CompareTag("Collectible"))

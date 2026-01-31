@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e272b4d2a16c3a4a9ad3f4973197fe7, type: 3}
   m_Name: Outlaw
   m_EditorClassIdentifier: 
-  movementStyle: 0
+  movementStyle: 4
   driftSpeed: 1
   rotationSpeed: 20
   jitterIntensity: 0.5
@@ -20,7 +20,7 @@ MonoBehaviour:
   description: 'Dangeros crimenal.
 
 '
-  icon: {fileID: 7317262202171141254, guid: 9ed729364e3f4c7438c1458a1f282576, type: 3}
+  visualPrefab: {fileID: 5551997089353068162, guid: b764ebd98c17abc4fa7c127712261c6a, type: 3}
   systemFoundAt: 4
   baseValue: 100
   targetPort: 0

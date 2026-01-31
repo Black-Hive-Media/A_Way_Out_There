@@ -147,16 +147,16 @@ public class AsteroidHandler : MonoBehaviour, IMineable
         // Setup visuals and data
         //if (itemObj.GetComponent<ItemWorldDisplay>() != null) 
         //{//error on mining here
-        itemObj.GetComponent<ItemWorldDisplay>().Setup(itemData);
+        itemObj.GetComponent<ItemWorldDisplay>().Setup(itemData, itemObj);
         //}
 
         // Add a "scatter" effect so they don't just stack in one spot
-        Rigidbody2D rb = itemObj.GetComponent<Rigidbody2D>();
+        /*Rigidbody2D rb = itemObj.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             Vector2 randomDir = Random.insideUnitCircle.normalized;
             rb.AddForce(randomDir * scatterForce, ForceMode2D.Impulse);
-        }
+        }*/
     }
 
 }

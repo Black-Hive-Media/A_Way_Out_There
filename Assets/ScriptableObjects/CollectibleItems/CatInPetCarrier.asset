@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e272b4d2a16c3a4a9ad3f4973197fe7, type: 3}
   m_Name: CatInPetCarrier
   m_EditorClassIdentifier: 
-  movementStyle: 0
+  movementStyle: 4
   driftSpeed: 1
   rotationSpeed: 20
   jitterIntensity: 0.5
   itemName: CatInPetCarrier
   description: This cat is big, orange and very fluffy.
-  icon: {fileID: 6921352137407293370, guid: a86e372e7ca38d7459557c309ea73403, type: 3}
+  visualPrefab: {fileID: 5551997089353068162, guid: b764ebd98c17abc4fa7c127712261c6a, type: 3}
   systemFoundAt: 0
   baseValue: 200
   targetPort: 0

@@ -13,7 +13,7 @@ public abstract class CollectibleItem : ScriptableObject//ShipItem
     [Header("Basic Info")]
     public string itemName;
     [TextArea] public string description;
-    public Sprite icon;
+    public GameObject visualPrefab;
     public SolarSystemFound systemFoundAt;
 
     [Header("Trade Info")]

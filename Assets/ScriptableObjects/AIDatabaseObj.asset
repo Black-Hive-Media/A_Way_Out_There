@@ -34,3 +34,5 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 5494e50a1ebec3f47afe816739d56689, type: 2}
     - key: CargoBayUpgradeNeeded
       value: {fileID: 11400000, guid: 07964a81f8f6ffb43bca4b893e667a83, type: 2}
+    - key: PassengerResisting
+      value: {fileID: 11400000, guid: bd3bcb5c453880e429bcf58a3fe820df, type: 2}
