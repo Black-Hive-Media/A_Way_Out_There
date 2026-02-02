@@ -11559,7 +11559,6 @@ Transform:
   - {fileID: 832294744}
   - {fileID: 683641553}
   - {fileID: 1677718477}
-  - {fileID: 1348652600}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &966693178
@@ -28104,6 +28103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1348652600}
   - component: {fileID: 1348652601}
+  - component: {fileID: 1348652602}
   m_Layer: 7
   m_Name: Cargo_Collected
   m_TagString: Untagged
@@ -28119,7 +28119,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348652599}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -28127,7 +28127,7 @@ Transform:
   - {fileID: 788976827}
   - {fileID: 483891598}
   - {fileID: 972610682}
-  m_Father: {fileID: 966693177}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1348652601
 Animator:
@@ -28151,6 +28151,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1773428102 &1348652602
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348652599}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_TranslationOffsets:
+  - {x: 0, y: 0, z: 0}
+  m_RotationOffsets:
+  - {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_AffectRotationX: 0
+  m_AffectRotationY: 0
+  m_AffectRotationZ: 0
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 966693177}
+    weight: 1
 --- !u!1 &1371571736
 GameObject:
   m_ObjectHideFlags: 0
@@ -135054,6 +135081,7 @@ SceneRoots:
   - {fileID: 1653427503}
   - {fileID: 529029280}
   - {fileID: 109673432}
+  - {fileID: 1348652600}
   - {fileID: 966693177}
   - {fileID: 767487019}
   - {fileID: 1596945564}
