@@ -147,6 +147,9 @@ MonoBehaviour:
   health: 5
   asteriodSize: 0
   internalItem: {fileID: 11400000, guid: e3fe409c9cedc7d469d0cede6153394e, type: 2}
+  maxDriftSpeed: 2
+  maxTumbleSpeed: 15
+  explosionFX: {fileID: 3239153806138618428, guid: 311acd3def5eda44ea716e44344b8773, type: 3}
 --- !u!50 &1922540343127559785
 Rigidbody2D:
   serializedVersion: 5

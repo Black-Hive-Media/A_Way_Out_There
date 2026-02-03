@@ -61,6 +61,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6463212009941356355, guid: cef08b363a1cb71429f15a8500c62bdd, type: 3}
+      propertyPath: explosionFX
+      value: 
+      objectReference: {fileID: 3239153806138618428, guid: 311acd3def5eda44ea716e44344b8773, type: 3}
+    - target: {fileID: 6463212009941356355, guid: cef08b363a1cb71429f15a8500c62bdd, type: 3}
       propertyPath: asteriodSize
       value: 3
       objectReference: {fileID: 0}

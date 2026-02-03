@@ -24,6 +24,8 @@ public class AsteroidHandler : MonoBehaviour, IMineable
     [Header("Movement Settings")]
     public float maxDriftSpeed = 2f;
     public float maxTumbleSpeed = 15f;
+    [Header("visualFX")]
+    public GameObject explosionFX;
 
     private Rigidbody2D rb;
     private float noiseOffset;
@@ -90,7 +92,10 @@ public class AsteroidHandler : MonoBehaviour, IMineable
             isDead = true;
             DropItems(yieldBonus);
             ItemPoolManager.Instance.ReleaseAsteroid(this.gameObject); // Clean up
-            
+            //
+            GameObject explosion = Instantiate(explosionFX);
+            explosion.transform.position = transform.position; 
+
             return true; // Tells the LaserController we are done
         }
         return false;
