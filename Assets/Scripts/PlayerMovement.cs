@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        thrustInput = UnityEngine.Input.GetAxis("Vertical");
+        /*thrustInput = UnityEngine.Input.GetAxis("Vertical");
         turnInput = UnityEngine.Input.GetAxis("Horizontal");
 
         // 2. Check for "Zero" input (Idle)
@@ -118,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
             idleTimer = 0f;
             hasTriggeredIdle = false;
             
-        }
+        }*/
     }
     
     void FixedUpdate()
@@ -132,12 +132,37 @@ public class PlayerMovement : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         // If an item is attached, ignore all new movement input
-       /* if (tractorBeamScript.isBeaming && tractorBeamScript.attachedItem != null)
-        {
-            return;
-        }*/
-
+        /* if (tractorBeamScript.isBeaming && tractorBeamScript.attachedItem != null)
+         {
+             return;
+         }*/
         moveInput = context.ReadValue<Vector2>();
+        thrustInput = moveInput.y;
+        turnInput = moveInput.x;
+
+        // 2. Check for "Zero" input (Idle)
+        // We use a small epsilon (0.01) to account for joystick drift
+        if (Mathf.Abs(thrustInput) < 0.01f && Mathf.Abs(turnInput) < 0.01f)
+        {
+
+            idleTimer += Time.deltaTime; // Increment timer while idle
+
+            // 3. Trigger once after 10 seconds
+            if (idleTimer >= idleThreshold && !hasTriggeredIdle)
+            {
+                AI_Manager.Instance.TriggerMessage("Idle Conversation");
+                hasTriggeredIdle = true; // Prevent spamming every frame
+            }
+        }
+        else
+        {
+            // 4. Reset everything if the player moves
+            idleTimer = 0f;
+            hasTriggeredIdle = false;
+
+        }
+
+       
         // Horizontal Logic
         ToggleThruster(topRight, moveInput.x < 0);
         ToggleThruster(bottomRight, moveInput.x < 0);
