@@ -910,7 +910,38 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      space_port_0: -2070355813515334672
+      space_port_1: 3101106861314733085
+      space_port_10: 7533867918284348465
+      space_port_11: 8834716946114436370
+      space_port_12: -8316437513337586377
+      space_port_13: -840751561735246971
+      space_port_14: -2274457955869461212
+      space_port_15: 819125129202243281
+      space_port_16: 6110007047127152009
+      space_port_17: -3227370790391237723
+      space_port_18: -6158465992458329501
+      space_port_19: 6357328355986218549
+      space_port_2: 3618592424672980659
+      space_port_20: 4021547298199513759
+      space_port_21: -2906910547578904551
+      space_port_22: -898491878614841450
+      space_port_23: -9034277850896407306
+      space_port_24: 6569571594765047856
+      space_port_25: 1807313870879253490
+      space_port_26: -9142634541633478794
+      space_port_27: 6886758730730367028
+      space_port_28: -1893021021893422172
+      space_port_29: 9054527252363719393
+      space_port_3: -5512190919944378667
+      space_port_30: 4629938417350369740
+      space_port_4: -1460377653849966602
+      space_port_5: 3756036010234955376
+      space_port_6: 4090225566949979374
+      space_port_7: 4774017294395449522
+      space_port_8: -7928565328667775920
+      space_port_9: 8793285067310415427
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
