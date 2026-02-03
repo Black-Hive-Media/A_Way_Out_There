@@ -37,11 +37,12 @@ public class TractorBeam : MonoBehaviour
     public Slider heatSlider; // Optional: Link to a UI Slider
     public GameObject visualFX;
     public AudioSource audioFX;
+    public GameObject shipSuccessFX;
 
     private float currentHeat = 0f;
     private bool isOverheated = false;
     private bool isBeaming = false;
-    private GameObject attachedItem = null;
+    public GameObject attachedItem = null;
     private Rigidbody2D playerRb;
     private PolygonCollider2D beamPoly;
     private float lastOverheatTime = -Mathf.Infinity;
@@ -119,6 +120,9 @@ public class TractorBeam : MonoBehaviour
     void BreakFree()
     {
         idleTimer = 0f;
+        
+        
+
         ReleaseBeam(); // Use your existing release logic to unparent and reset physics
                        // Optional: Add a small "pop" force so it doesn't just sit there
     }
@@ -229,8 +233,14 @@ public class TractorBeam : MonoBehaviour
         ReleaseBeam();
 
         // 4. Feedback (Optional)
-        // PlaySound(collectionSFX);
-        // Instantiate(sparkleEffect, transform.position, Quaternion.identity);
+        shipSuccessFX.SetActive(true);
+        StartCoroutine(TurnOffSuccessFX(5f));
+    }
+    IEnumerator TurnOffSuccessFX(float waitTime)
+    {
+        // Pause execution for the specified duration
+        yield return new WaitForSeconds(waitTime);
+        shipSuccessFX.SetActive(false);
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -257,10 +267,19 @@ public class TractorBeam : MonoBehaviour
                 itemRb.angularVelocity = 0f;
 
                 StartSnap(attachedItem);
+                
                 //lock ship movement
                 playerRb.linearVelocity = Vector2.zero;
-                    playerRb.angularVelocity = 0f;
-                
+                playerRb.angularVelocity = 0f;
+
+                //TURN ON FX
+                Transform childTransform = attachedItem.transform.GetChild(0).transform.Find("Tractor Beam Effect");
+                if (childTransform != null)
+                {
+                    GameObject childObject = childTransform.gameObject;
+                    childObject.SetActive(true);
+                }
+
             }
             itemsInRange.Add(other.gameObject);
 
@@ -392,6 +411,13 @@ public class TractorBeam : MonoBehaviour
     {
         if (attachedItem != null)
         {
+            Transform childTransform = attachedItem.transform.GetChild(0).transform.Find("Tractor Beam Effect");
+            if (childTransform != null)
+            {
+                GameObject childObject = childTransform.gameObject;
+                childObject.SetActive(false);
+            }
+
             attachedItem.transform.SetParent(null, true);
 
             attachedItem = null;
