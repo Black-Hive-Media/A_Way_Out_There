@@ -38,11 +38,13 @@ public class TractorBeam : MonoBehaviour
     public GameObject visualFX;
     public AudioSource audioFX;
     public GameObject shipSuccessFX;
+    public GameObject cargoUI;
+   
 
     private float currentHeat = 0f;
     private bool isOverheated = false;
     private bool isBeaming = false;
-    public GameObject attachedItem = null;
+    private GameObject attachedItem = null;
     private Rigidbody2D playerRb;
     private PolygonCollider2D beamPoly;
     private float lastOverheatTime = -Mathf.Infinity;
@@ -233,6 +235,7 @@ public class TractorBeam : MonoBehaviour
         ReleaseBeam();
 
         // 4. Feedback (Optional)
+        cargoUI.GetComponent<Animator>().Play("UI_dropdown", 0);
         shipSuccessFX.SetActive(true);
         StartCoroutine(TurnOffSuccessFX(5f));
     }

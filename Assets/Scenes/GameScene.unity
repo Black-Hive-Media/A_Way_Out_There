@@ -9453,6 +9453,8 @@ MonoBehaviour:
   heatSlider: {fileID: 967714411}
   visualFX: {fileID: 1170616524}
   audioFX: {fileID: 1399735342}
+  shipSuccessFX: {fileID: 1348652599}
+  cargoUI: {fileID: 972673615}
 --- !u!1 &688524394
 GameObject:
   m_ObjectHideFlags: 0
@@ -11197,7 +11199,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1348652600}
   - {fileID: 557921706}
   - {fileID: 832391484}
   - {fileID: 1669930973}
@@ -27703,7 +27704,7 @@ Transform:
   - {fileID: 788976827}
   - {fileID: 483891598}
   - {fileID: 972610682}
-  m_Father: {fileID: 966693177}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1348652601
 Animator:
@@ -134580,6 +134581,7 @@ SceneRoots:
   - {fileID: 1653427503}
   - {fileID: 529029280}
   - {fileID: 109673432}
+  - {fileID: 1348652600}
   - {fileID: 966693177}
   - {fileID: 767487019}
   - {fileID: 1596945564}
