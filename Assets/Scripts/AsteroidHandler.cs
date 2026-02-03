@@ -89,12 +89,14 @@ public class AsteroidHandler : MonoBehaviour, IMineable
 
         if (currentHealth <= 0)
         {
+            GameObject explosion = Instantiate(explosionFX);
+            explosion.transform.position = transform.position;
+
             isDead = true;
             DropItems(yieldBonus);
             ItemPoolManager.Instance.ReleaseAsteroid(this.gameObject); // Clean up
             //
-            GameObject explosion = Instantiate(explosionFX);
-            explosion.transform.position = transform.position; 
+            
 
             return true; // Tells the LaserController we are done
         }

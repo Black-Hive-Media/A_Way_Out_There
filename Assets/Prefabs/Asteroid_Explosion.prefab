@@ -183,7 +183,7 @@ Transform:
   m_GameObject: {fileID: 823670470819360366}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.70710677}
-  m_LocalPosition: {x: -6.4223185, y: -14.589342, z: -4.8100557}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3.3431342, y: 3.3431342, z: 3.3431342}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14795,7 +14795,7 @@ Transform:
   m_GameObject: {fileID: 3029994055256549146}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.70710677}
-  m_LocalPosition: {x: -8.09, y: -16.3, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19714,6 +19714,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3670533563849572345}
+  - component: {fileID: 5174211918725246360}
   m_Layer: 0
   m_Name: Asteroid_Explosion
   m_TagString: Untagged
@@ -19730,7 +19731,7 @@ Transform:
   m_GameObject: {fileID: 3239153806138618428}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.3490386, y: 2.8418527, z: 4.8100557}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19740,6 +19741,18 @@ Transform:
   - {fileID: 8357053720199684497}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5174211918725246360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3239153806138618428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5ba89f441cda1428490143dd81d68a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4047816617098024392
 GameObject:
   m_ObjectHideFlags: 0

@@ -317,7 +317,7 @@ public class TractorBeam : MonoBehaviour
         // Temporarily disable physics so it doesn't fight the movement
         itemRb.bodyType = RigidbodyType2D.Kinematic;
         itemRb.linearVelocity = Vector2.zero;
-
+        
         while (elapsed < duration)
         {
             if (item == null) yield break; // Safety if item is destroyed
