@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -69,8 +69,18 @@ public class CargoManager : MonoBehaviour
             {
                 cargoFullImg.SetActive(true);
                 AI_Manager.Instance.TriggerMessage("CargoBayFull");
-                
             }
+        }
+        
+        if (cargoFullImg.activeInHierarchy == true)
+        {
+            Debug.Log("herehhhhhh");
+            GetComponentInChildren<Animator>().Play("UI_dropdown_Stay", 0);
+        }
+        else
+        {
+            Debug.Log("hahahahkkkkkkkkk");
+            GetComponentInChildren<Animator>().Play("UI_dropdown", 0);
         }
 
         //fill the icon in the hud now
@@ -104,13 +114,12 @@ public class CargoManager : MonoBehaviour
         if (cargoFullImg.activeInHierarchy == true)
         {
             cargoFullImg.SetActive(false);
-        }
 
-        //Debug.Log(itemIcons.Count);
+            GetComponentInChildren<Animator>().Play("UI_dropdown_Rev", 0);
+        }
 
         for (int i = 0; i < itemIcons.Count; i++)
         {
-            //Debug.Log(itemIcons[i].name + "  " + i + "  " + itemToSell.prefabForHud.name);
 
             if (itemIcons[i].name.Contains(itemToSell.prefabForHud.name)) 
             {

@@ -235,7 +235,7 @@ public class TractorBeam : MonoBehaviour
         ReleaseBeam();
 
         // 4. Feedback (Optional)
-        cargoUI.GetComponent<Animator>().Play("UI_dropdown", 0);
+        
         shipSuccessFX.SetActive(true);
         StartCoroutine(TurnOffSuccessFX(5f));
     }
