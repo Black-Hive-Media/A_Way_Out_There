@@ -74,12 +74,10 @@ public class CargoManager : MonoBehaviour
         
         if (cargoFullImg.activeInHierarchy == true)
         {
-            Debug.Log("herehhhhhh");
             GetComponentInChildren<Animator>().Play("UI_dropdown_Stay", 0);
         }
         else
         {
-            Debug.Log("hahahahkkkkkkkkk");
             GetComponentInChildren<Animator>().Play("UI_dropdown", 0);
         }
 
@@ -122,14 +120,12 @@ public class CargoManager : MonoBehaviour
         {
 
             if (itemIcons[i].name.Contains(itemToSell.prefabForHud.name)) 
-            {
-               
+            {               
                 RemoveAndDestroy(itemIcons[i]);
                 
                 return;
             }
         }
-
 
         AI_Manager.Instance.TriggerMessage("ItemSold");
     }
