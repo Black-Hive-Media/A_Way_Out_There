@@ -7757,6 +7757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walletData: {fileID: 11400000, guid: c7d24900591d0f34e914cf75babf4f18, type: 2}
+  creditsText: {fileID: 0}
 --- !u!4 &436872593
 Transform:
   m_ObjectHideFlags: 0
@@ -27477,6 +27478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walletData: {fileID: 11400000, guid: c7d24900591d0f34e914cf75babf4f18, type: 2}
+  creditsText: {fileID: 2126399108}
 --- !u!1 &1159698077
 GameObject:
   m_ObjectHideFlags: 0

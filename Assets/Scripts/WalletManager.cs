@@ -1,11 +1,13 @@
 using UnityEngine;
 using System;
-
+using TMPro;
 public class WalletManager : MonoBehaviour
 {
     public static WalletManager Instance { get; private set; }
 
     [SerializeField] private PlayerWallet walletData;
+
+    public TextMeshProUGUI creditsText; 
 
     // Use an Action to notify the UI whenever the balance changes
     public static event Action<int> OnBalanceChanged;
@@ -22,6 +24,7 @@ public class WalletManager : MonoBehaviour
         walletData.credits += amount;
         OnBalanceChanged?.Invoke(walletData.credits);
 
+        //creditsText.text = "Credits: " + walletData.credits;
         // AI Reaction for big scores
         if (amount > 1000) AI_Manager.Instance.TriggerMessage("BigProfit");
     }
@@ -32,6 +35,7 @@ public class WalletManager : MonoBehaviour
         {
             walletData.credits -= cost;
             OnBalanceChanged?.Invoke(walletData.credits);
+            creditsText.text = "Credits: " + walletData.credits;
             return true; // Purchase successful
         }
 

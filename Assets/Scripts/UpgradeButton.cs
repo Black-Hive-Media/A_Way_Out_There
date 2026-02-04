@@ -11,7 +11,7 @@ public class UpgradeButton : MonoBehaviour
         //
         if (StoreManager.Instance.playerLaser.currentStats.name.CompareTo("Tier1Laser") == 0) 
         {
-            GetComponentInChildren<TextMeshPro>().text = myUpgrade[0].name + " Cost: " + myUpgrade[0].cost;
+           // GetComponentInChildren<TextMeshPro>().text = myUpgrade[0].name + " Cost: " + myUpgrade[0].cost;
 
         }
         else
