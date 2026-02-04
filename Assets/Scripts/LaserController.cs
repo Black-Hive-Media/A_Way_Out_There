@@ -10,7 +10,7 @@ public interface IMineable
 }
 public class LaserController : MonoBehaviour
 {
-    [SerializeField] private MiningLaserStats currentStats;
+    public MiningLaserStats currentStats;
 
     private bool isFiring = false;
     [Header("Visuals")]

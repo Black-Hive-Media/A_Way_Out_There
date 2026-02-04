@@ -30,7 +30,11 @@ public class SpacePortManager : MonoBehaviour
     {
         // Switches back to your gameplay/ship controls
         StopAllCoroutines();
-        StartCoroutine(LaunchShip(playerObj.transform));
+
+        if (playerObj.transform != null)
+        {
+            StartCoroutine(LaunchShip(playerObj.transform));
+        }
     }
 
     private IEnumerator LaunchShip(Transform shipTransform)

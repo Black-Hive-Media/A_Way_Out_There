@@ -4,7 +4,7 @@ public class StoreManager : MonoBehaviour
     public static StoreManager Instance;
 
     // References to your system controllers
-    [SerializeField] private LaserController playerLaser;
+    public LaserController playerLaser;
     //[SerializeField] private FuelSystem playerFuel; // Hypothetical fuel script
 
     private void Awake() => Instance = this;
