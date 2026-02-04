@@ -43,9 +43,20 @@ public class ItemPoolManager : MonoBehaviour
 
 
     // Specific release methods so objects go to the right internal pool
-    public void ReleaseAsteroid(GameObject obj) => asteroidPool.Release(obj);
-    public void ReleaseItem(GameObject obj) => itemPool.Release(obj); 
+       public void ReleaseAsteroid(GameObject obj)
+    {
+        // Safety check for 2026: don't release if already in the pool
+        if (!obj.activeInHierarchy) return;
 
+        asteroidPool.Release(obj);
+    }
+    public void ReleaseItem(GameObject obj)
+    {
+        // Safety check for 2026: don't release if already in the pool
+        if (!obj.activeInHierarchy) return;
+
+        itemPool.Release(obj);
+    }
     /*
         // Public method to access the pool
         //public GameObject GetFromPool() => pool.Get();

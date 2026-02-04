@@ -1,59 +1,90 @@
 using UnityEngine;
 using TMPro;
+using System.Data.Common;
 
 public class UpgradeButton : MonoBehaviour
 {
     public ShipUpgrade[] myUpgrade;
 
+    private TextMeshProUGUI textObj;
+
+    public ShipUpgrade.UpgradeType upgradeType;
+
     private void OnEnable()
     {
         //set next upgrade's name and amount
         //
-        if (StoreManager.Instance.playerLaser.currentStats.name.CompareTo("Tier1Laser") == 0) 
+        if (textObj == null)
         {
-           // GetComponentInChildren<TextMeshPro>().text = myUpgrade[0].name + " Cost: " + myUpgrade[0].cost;
-
+            textObj = GetComponentInChildren<TextMeshProUGUI>();
         }
-        else
+        if (upgradeType == ShipUpgrade.UpgradeType.MiningLaser)
         {
-            for (int i = 0; i < myUpgrade.Length; i++)
+
+            if (StoreManager.Instance.playerLaser.currentStats.name.CompareTo("Tier1Laser") == 0)
             {
-                Debug.Log(myUpgrade[i].upgradeData.name + "   " + StoreManager.Instance.playerLaser.currentStats.name);
+                textObj.text = myUpgrade[0].name + " Cost: " + myUpgrade[0].cost;
 
-                if (myUpgrade[i].upgradeData.name == StoreManager.Instance.playerLaser.currentStats.name)
+            }
+            else
+            {
+                for (int i = 0; i < myUpgrade.Length; i++)
                 {
-                    int newUpgrade = (i + 1);
-                    if (newUpgrade < myUpgrade.Length)
-                    {
-                        GetComponentInChildren<TextMeshPro>().text = myUpgrade[newUpgrade].name + " Cost: " + myUpgrade[newUpgrade].cost;
-                        break;
-                    }
+                    Debug.Log(myUpgrade[i].upgradeData.name + "   " + StoreManager.Instance.playerLaser.currentStats.name);
 
+                    if (myUpgrade[i].upgradeData.name == StoreManager.Instance.playerLaser.currentStats.name)
+                    {
+                        int newUpgrade = (i + 1);
+                        if (newUpgrade < myUpgrade.Length)
+                        {
+                            textObj.text = myUpgrade[newUpgrade].name + " Cost: " + myUpgrade[newUpgrade].cost;
+                            break;
+                        }
+
+                    }
                 }
             }
         }
-        
+
     }
     public void OnClick()
     {
-        for (int i = 0; i < myUpgrade.Length; i++) 
+        if (upgradeType == ShipUpgrade.UpgradeType.MiningLaser)
         {
-            if (myUpgrade[i].upgradeData.name == StoreManager.Instance.playerLaser.currentStats.name) 
+           
+            if (StoreManager.Instance.playerLaser.currentStats.name.CompareTo("Tier1Laser") == 0)
             {
-                int newUpgrade = (i + 1);
-                if (newUpgrade < myUpgrade.Length)
+                Debug.Log("here1111");
+                //first upgrade
+                StoreManager.Instance.AttemptPurchase(myUpgrade[0]);
+
+            }
+            else
+            {
+                for (int i = 0; i < myUpgrade.Length; i++)
                 {
-                    StoreManager.Instance.AttemptPurchase(myUpgrade[newUpgrade]);
-                    break;
+                    Debug.Log(myUpgrade[i].upgradeData.name + " h  " + StoreManager.Instance.playerLaser.currentStats.name);
+
+                    if (myUpgrade[i].upgradeData.name == StoreManager.Instance.playerLaser.currentStats.name)
+                    {
+                        int newUpgrade = (i + 1);
+                        if (newUpgrade < myUpgrade.Length)
+                        {
+                            Debug.Log("here222222");
+                            StoreManager.Instance.AttemptPurchase(myUpgrade[newUpgrade]);
+                            break;
+                        }
+                        else
+                        {
+                            Debug.Log("hereeeeeeeee");
+                            AI_Manager.Instance.TriggerMessage("AlreadyOwnAllUpgrades");
+                        }
+
+                    }
                 }
-                else 
-                {
-                    AI_Manager.Instance.TriggerMessage("AlreadyOwnAllUpgrades");
-                }
-                
             }
         }
-       
+
     }
 }
 

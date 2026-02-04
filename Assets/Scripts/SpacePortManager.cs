@@ -1,18 +1,30 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SpacePortManager : MonoBehaviour
 {
+    public static SpacePortManager Instance { get; private set; }
+
     public SpacePortUI portUI;
     public PlayerInput playerInput;
     public Animator doorAnimator;
+
+    public TextMeshProUGUI playerCreditsTxt;
 
     private GameObject playerObj;
 
     [SerializeField] private float landingSpeed = 2f;
     [SerializeField] private float zDepthTarget = 5f;
     private float origYPos;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
     // How far back it moves
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
