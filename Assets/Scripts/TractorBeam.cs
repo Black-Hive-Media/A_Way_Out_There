@@ -62,10 +62,15 @@ public class TractorBeam : MonoBehaviour
         }
         ReleaseBeam();
     }
-    public void DeployBeam(InputAction.CallbackContext context)
+    /// <summary>
+    /// Start the Beam
+    /// </summary>
+    /// <param name="context"></param>
+    public void DeployBeam(bool isStarted)//(InputAction.CallbackContext context)
     {
+        //check if laser is deployed first
         // 1. Check if the button was just pressed
-        if (context.started)
+        if (isStarted)//context.started)
         {
             if (visualFX.activeInHierarchy == false)
             {
@@ -79,12 +84,20 @@ public class TractorBeam : MonoBehaviour
                 ReleaseBeam();
             }
         }
+        else
+        {
+            ReleaseBeam();
+        }
 
         // 2. Check if the button was just released
-        if (context.canceled)
+        /*if (context.canceled)
         {
-        }
+        }*/
     }
+    /// <summary>
+    /// Reel in the items with the beam, it has already been deployed
+    /// </summary>
+    /// <param name="context"></param>
     public void PullBeam(InputAction.CallbackContext context)
     {
         // 1. Check if the button was just pressed

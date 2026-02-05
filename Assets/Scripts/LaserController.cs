@@ -149,10 +149,11 @@ public class LaserController : MonoBehaviour
             }
         }
     }
-    public void Fire(InputAction.CallbackContext context)
+    public void Fire(bool doFire)//(InputAction.CallbackContext context)
     {
+        isFiring = doFire;
         // 1. Check if the button was just pressed
-        if (context.started)
+        /*if (context.started)
         {
             isFiring = true;
         }
@@ -161,7 +162,7 @@ public class LaserController : MonoBehaviour
         if (context.canceled)
         {
             isFiring = false;
-        }
+        }*/
     }
 
 }

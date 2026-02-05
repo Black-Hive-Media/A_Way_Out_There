@@ -15,7 +15,7 @@ MonoBehaviour:
   miningSpeed: 2
   beamWobble: 0.1
   bonusYieldChance: 0
-  maxAsteriodSizeCapable: 1
+  maxAsteriodSizeCapable: 3
   validTargets:
     serializedVersion: 2
     m_Bits: 256
