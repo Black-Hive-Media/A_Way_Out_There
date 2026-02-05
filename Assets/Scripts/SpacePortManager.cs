@@ -19,6 +19,7 @@ public class SpacePortManager : MonoBehaviour
     [SerializeField] private float zDepthTarget = 5f;
     private float origYPos;
 
+    int didAwake = 0;
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -105,6 +106,11 @@ public class SpacePortManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            if (didAwake == 0) 
+            {
+                didAwake = 1;
+                return;
+            }
             //stop player controls
             UITakeControl();
             //open doors

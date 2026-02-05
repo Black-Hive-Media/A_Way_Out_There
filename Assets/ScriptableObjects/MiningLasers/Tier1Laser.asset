@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tier1Laser
   m_EditorClassIdentifier: 
   miningSpeed: 1
-  beamWobble: 0.5
+  beamWobble: 0.1
   bonusYieldChance: 0
   maxAsteriodSizeCapable: 0
   validTargets:
