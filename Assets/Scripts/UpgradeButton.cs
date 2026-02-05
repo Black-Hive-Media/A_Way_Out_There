@@ -54,7 +54,6 @@ public class UpgradeButton : MonoBehaviour
            
             if (StoreManager.Instance.playerLaser.currentStats.name.CompareTo("Tier1Laser") == 0)
             {
-                Debug.Log("here1111");
                 //first upgrade
                 StoreManager.Instance.AttemptPurchase(myUpgrade[0]);
 
@@ -63,20 +62,18 @@ public class UpgradeButton : MonoBehaviour
             {
                 for (int i = 0; i < myUpgrade.Length; i++)
                 {
-                    Debug.Log(myUpgrade[i].upgradeData.name + " h  " + StoreManager.Instance.playerLaser.currentStats.name);
+                    //Debug.Log(myUpgrade[i].upgradeData.name + " h  " + StoreManager.Instance.playerLaser.currentStats.name);
 
                     if (myUpgrade[i].upgradeData.name == StoreManager.Instance.playerLaser.currentStats.name)
                     {
                         int newUpgrade = (i + 1);
                         if (newUpgrade < myUpgrade.Length)
                         {
-                            Debug.Log("here222222");
                             StoreManager.Instance.AttemptPurchase(myUpgrade[newUpgrade]);
                             break;
                         }
                         else
                         {
-                            Debug.Log("hereeeeeeeee");
                             AI_Manager.Instance.TriggerMessage("AlreadyOwnAllUpgrades");
                         }
 

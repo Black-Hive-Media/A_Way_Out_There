@@ -258,7 +258,15 @@ public class TractorBeam : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         shipSuccessFX.SetActive(false);
     }
+    void OnTriggerStay2D(Collider2D other)
+    {
+        OnCheckTrigger(other);
+    }
     void OnTriggerEnter2D(Collider2D other)
+    {
+        OnCheckTrigger(other);
+    }
+    void OnCheckTrigger(Collider2D other)
     {
         if (isDeployed == false)
         {
