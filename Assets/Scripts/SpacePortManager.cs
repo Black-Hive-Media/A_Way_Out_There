@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class SpacePortManager : MonoBehaviour
 {
@@ -75,10 +76,10 @@ public class SpacePortManager : MonoBehaviour
         
         playerInput.SwitchCurrentActionMap("Player");
     }
-    private IEnumerator LandShip(GameObject playerShip, Transform shipTransform)
+    private IEnumerator LandShip(GameObject playerShip, Transform shipTransform, Vector3 targetPos)
     {
         // Disable player controls here if necessary
-        Vector3 targetPosition = new Vector3(transform.position.x, -32, zDepthTarget);
+        Vector3 targetPosition = new Vector3(transform.position.x, targetPos.y, zDepthTarget);
 
         while (Vector3.Distance(shipTransform.position, targetPosition) > 0.01f)
         {
@@ -106,7 +107,7 @@ public class SpacePortManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (didAwake == 0) 
+            if (didAwake == 0)
             {
                 didAwake = 1;
                 return;
@@ -118,10 +119,21 @@ public class SpacePortManager : MonoBehaviour
             //change z of ship
             if (playerObj == null) { playerObj = collision.gameObject; }
             origYPos = playerObj.transform.position.y;
-            StartCoroutine(LandShip(playerObj, collision.transform));
-            
-        }
 
+            //Let's math to get the center perfect
+            SpriteRenderer sr = playerObj.GetComponent<SpriteRenderer>();
+            Vector3 worldSize = sr.bounds.size;
+
+            float width = worldSize.x;
+            float height = worldSize.y;
+            CircleCollider2D circle = gameObject.GetComponent<CircleCollider2D>();
+            // This gives you the world-space center, including offsets
+            Vector3 centerPoint = new Vector3(circle.bounds.center.x - (width/2), circle.bounds.center.y - (height/2), circle.bounds.center.z);
+            StartCoroutine(LandShip(playerObj, collision.transform, centerPoint));
+
+        }
     }
+
+    
 
 }

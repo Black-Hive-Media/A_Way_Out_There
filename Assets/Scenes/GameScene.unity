@@ -27096,8 +27096,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.19, y: -9.15}
-  m_Radius: 2
+  m_Offset: {x: 0.15, y: -9.15}
+  m_Radius: 3.4
 --- !u!21 &1086775986
 Material:
   serializedVersion: 8
