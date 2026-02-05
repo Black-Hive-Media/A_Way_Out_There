@@ -59,9 +59,10 @@ public class SpacePortManager : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
         playerObj.GetComponentInChildren<Renderer>().sortingOrder = 0;
         // Target is the original Z, but keeping current X/Y to move straight up
-        Vector3 targetPosition = new Vector3(shipTransform.position.x, shipTransform.position.y, 0);
+        Vector3 targetPosition = new Vector3(0, -29.4f, 0);
 
-        while (Mathf.Abs(shipTransform.position.z - 0) > 0.01f)
+        // while (Mathf.Abs(shipTransform.position.z - 0) > 0.01f)
+        while (Vector3.Distance(shipTransform.position, targetPosition) > 0.01f)
         {
             shipTransform.position = Vector3.MoveTowards(
                 shipTransform.position,
@@ -76,10 +77,10 @@ public class SpacePortManager : MonoBehaviour
         
         playerInput.SwitchCurrentActionMap("Player");
     }
-    private IEnumerator LandShip(GameObject playerShip, Transform shipTransform, Vector3 targetPos)
+    private IEnumerator LandShip(GameObject playerShip, Transform shipTransform)
     {
         // Disable player controls here if necessary
-        Vector3 targetPosition = new Vector3(transform.position.x, targetPos.y, zDepthTarget);
+        Vector3 targetPosition = new Vector3(0, -32.48f, zDepthTarget);
 
         while (Vector3.Distance(shipTransform.position, targetPosition) > 0.01f)
         {
@@ -119,17 +120,7 @@ public class SpacePortManager : MonoBehaviour
             //change z of ship
             if (playerObj == null) { playerObj = collision.gameObject; }
             origYPos = playerObj.transform.position.y;
-
-            //Let's math to get the center perfect
-            SpriteRenderer sr = playerObj.GetComponent<SpriteRenderer>();
-            Vector3 worldSize = sr.bounds.size;
-
-            float width = worldSize.x;
-            float height = worldSize.y;
-            CircleCollider2D circle = gameObject.GetComponent<CircleCollider2D>();
-            // This gives you the world-space center, including offsets
-            Vector3 centerPoint = new Vector3(circle.bounds.center.x - (width/2), circle.bounds.center.y - (height/2), circle.bounds.center.z);
-            StartCoroutine(LandShip(playerObj, collision.transform, centerPoint));
+            StartCoroutine(LandShip(playerObj, collision.transform));
 
         }
     }

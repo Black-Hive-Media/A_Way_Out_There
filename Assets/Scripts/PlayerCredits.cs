@@ -18,7 +18,7 @@ public class PlayerCredits : MonoBehaviour
         TextMeshProUGUI playerTMP = GetComponent<TextMeshProUGUI>();
         int playerCredits = WalletManager.Instance.GetCurrentBalance();
         //set the TMPro's .text to "Credits: " + playerCredits;
-        playerTMP.text = "Credits: " + playerCredits.ToString();
+        playerTMP.text = "Credits: \n" + playerCredits.ToString();
     }
 
 }

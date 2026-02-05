@@ -39,7 +39,7 @@ public class SpacePortUI : MonoBehaviour
             // Optional: Dim buttons for items that don't belong at this port
             if (item.targetPort != currentPortType)
             {
-                btnObj.GetComponent<UnityEngine.UI.Image>().color = Color.gray;
+                //btnObj.GetComponent<UnityEngine.UI.Image>().color = Color.gray;
             }
         }
     }
