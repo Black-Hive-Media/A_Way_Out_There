@@ -27039,6 +27039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c78c812f601984982ffe3ea04a3b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vcam: {fileID: 1119044697}
   portUI: {fileID: 1730133236}
   playerInput: {fileID: 966693182}
   doorAnimator: {fileID: 1195063844}
@@ -27509,15 +27510,15 @@ MonoBehaviour:
   Composition:
     ScreenPosition: {x: 0, y: 0}
     DeadZone:
-      Enabled: 1
+      Enabled: 0
       Size: {x: 0.2, y: 0.2}
     HardLimits:
-      Enabled: 1
+      Enabled: 0
       Size: {x: 0.5, y: 0.5}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 0
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 2, y: 2, z: 2}
+  Damping: {x: 0, y: 0, z: 0}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -27575,7 +27576,7 @@ Transform:
   m_GameObject: {fileID: 1119044695}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -27.712984, z: -20}
+  m_LocalPosition: {x: 0, y: -29.4, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

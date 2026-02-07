@@ -1,5 +1,7 @@
 using System.Collections;
+using NUnit.Framework.Internal.Filters;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
@@ -8,6 +10,7 @@ public class SpacePortManager : MonoBehaviour
 {
     public static SpacePortManager Instance { get; private set; }
 
+    public CinemachineCamera vcam;
     public SpacePortUI portUI;
     public PlayerInput playerInput;
     public Animator doorAnimator;
@@ -31,7 +34,7 @@ public class SpacePortManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     public void UITakeControl()
@@ -55,7 +58,7 @@ public class SpacePortManager : MonoBehaviour
     {
 
         doorAnimator.Play("doors_open", 0);
-        
+
         yield return new WaitForSeconds(3.5f);
         playerObj.GetComponentInChildren<Renderer>().sortingOrder = 0;
         // Target is the original Z, but keeping current X/Y to move straight up
@@ -74,14 +77,35 @@ public class SpacePortManager : MonoBehaviour
 
         // Reset Z to exactly the original value
         shipTransform.position = new Vector3(shipTransform.position.x, shipTransform.position.y, 0);
-        
+        vcam.Follow = shipTransform;
         playerInput.SwitchCurrentActionMap("Player");
     }
+
     private IEnumerator LandShip(GameObject playerShip, Transform shipTransform)
     {
-        // Disable player controls here if necessary
         Vector3 targetPosition = new Vector3(0, -32.48f, zDepthTarget);
+        Vector3 camTargetPosition = new Vector3(0, -21/*vcam.transform.position.y*/, vcam.transform.position.z);
+        vcam.Follow = null;
+       
+         Vector3 startPos = vcam.transform.position;
+         float elapsed = 0;
 
+         // 1. Get the Follow component to modify damping
+         var follow = vcam.GetComponent<CinemachineFollow>();
+
+
+         while (elapsed < 2.0f)
+         {
+             elapsed += Time.deltaTime;
+             float t = Mathf.SmoothStep(0, 1, elapsed / 2.0f);
+
+             // Move the camera transform manually
+             vcam.transform.position = Vector3.Lerp(startPos, camTargetPosition, t);
+
+             yield return null;
+         }
+
+        ///////  
         while (Vector3.Distance(shipTransform.position, targetPosition) > 0.01f)
         {
             // MoveTowards handles the smooth linear interpolation
@@ -94,10 +118,11 @@ public class SpacePortManager : MonoBehaviour
             yield return null; // Wait for the next frame
         }
 
+        
         // Final snap to target
         shipTransform.position = targetPosition;
         //close doors
-        
+
         playerShip.GetComponentInChildren<Renderer>().sortingOrder = -2;
         doorAnimator.Play("doors_close", 0);
         yield return new WaitForSecondsRealtime(5);
@@ -125,6 +150,6 @@ public class SpacePortManager : MonoBehaviour
         }
     }
 
-    
+
 
 }
