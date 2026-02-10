@@ -6,10 +6,7 @@ public class ShipSystemsManager : MonoBehaviour
     [SerializeField] private GameObject laserObject;
     [SerializeField] private GameObject tractorBeamObject;
 
-    //private bool useLaser = false;
-    // Called by your "SwitchToLaser" Input Action
-    bool canLaser = true;
-    bool canBeam = true;
+ 
     public void OnSelectLaser(InputAction.CallbackContext context)
     {
         if (context.performed) 

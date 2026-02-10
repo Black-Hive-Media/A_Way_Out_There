@@ -23,7 +23,7 @@ public class SpacePortManager : MonoBehaviour
     [SerializeField] private float zDepthTarget = 5f;
     private float origYPos;
 
-    int didAwake = 0;
+    int didIAwake = 0;
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -52,6 +52,8 @@ public class SpacePortManager : MonoBehaviour
         {
             StartCoroutine(LaunchShip(playerObj.transform));
         }
+        //set cam back active
+        portUI.CloseMenu();
     }
 
     private IEnumerator LaunchShip(Transform shipTransform)
@@ -133,9 +135,9 @@ public class SpacePortManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (didAwake == 0)
+            if (didIAwake == 0)
             {
-                didAwake = 1;
+                didIAwake = 1;
                 return;
             }
             //stop player controls

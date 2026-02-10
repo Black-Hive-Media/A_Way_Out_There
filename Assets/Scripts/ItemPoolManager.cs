@@ -10,9 +10,6 @@ public class ItemPoolManager : MonoBehaviour
 
     [SerializeField] private GameObject[] asteroidPrefabs;
     [SerializeField] private GameObject itemPrefab; 
-     
-    [SerializeField] private int defaultCapacity = 20;
-    [SerializeField] private int maxPoolSize = 50;
 
     private ObjectPool<GameObject> pool;
 

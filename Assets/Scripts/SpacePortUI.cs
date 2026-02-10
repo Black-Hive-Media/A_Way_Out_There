@@ -7,11 +7,23 @@ public class SpacePortUI : MonoBehaviour
     [SerializeField] private GameObject itemButtonPrefab;
     [SerializeField] private CollectibleItem.DestinationPort currentPortType;
 
+    [SerializeField] private GameObject gameCam;
     public void OpenMenu()//(CollectibleItem.DestinationPort portType)
     {
-        currentPortType = CollectibleItem.DestinationPort.SettlementPort;//portType;
+        currentPortType = CollectibleItem.DestinationPort.SettlementPort;
         menuPanel.SetActive(true);
-        RefreshList();
+        //Swap Cameras:
+        gameCam.SetActive(false);
+
+
+        //RefreshList();
+    }
+    public void CloseMenu()//(CollectibleItem.DestinationPort portType)
+    {
+        //Swap Cameras:
+        gameCam.SetActive(true); 
+        menuPanel.SetActive(false);
+        
     }
 
     public void RefreshList()
