@@ -5171,7 +5171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1512063581674951366}
   - component: {fileID: 3539505621648478700}
-  - component: {fileID: 5874358619595378334}
+  - component: {fileID: 7416006672645243322}
   m_Layer: 0
   m_Name: port_glow_0
   m_TagString: Untagged
@@ -5217,7 +5217,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 29dfd736c0c842f4fbb5f74fc9bb4b98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5249,7 +5249,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5874358619595378334
+--- !u!114 &7416006672645243322
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5261,7 +5261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentShaderType: 3
+  currentShaderType: 0
   normalStrength: 5
   normalSmoothing: 1
   computingNormal: 0
@@ -5322,7 +5322,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 24451a15e1236c7478337e985f5befce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5366,7 +5366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentShaderType: 3
+  currentShaderType: 0
   normalStrength: 5
   normalSmoothing: 1
   computingNormal: 0
