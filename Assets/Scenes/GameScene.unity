@@ -2308,7 +2308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 207399357}
   m_Layer: 0
-  m_Name: Space_Port
+  m_Name: Space_Port_Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45683,7 +45683,7 @@ GameObject:
   - component: {fileID: 1926012828}
   - component: {fileID: 1926012829}
   m_Layer: 11
-  m_Name: Port_Scene
+  m_Name: Port_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

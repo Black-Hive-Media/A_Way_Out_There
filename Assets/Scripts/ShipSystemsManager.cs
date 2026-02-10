@@ -33,7 +33,7 @@ public class ShipSystemsManager : MonoBehaviour
         }
     }
 
-    private void SetSystemActive(bool useLaser, bool useTractorBeam)
+   public void SetSystemActive(bool useLaser, bool useTractorBeam)
     {
         laserObject.GetComponent<LaserController>().Fire(useLaser);            
         

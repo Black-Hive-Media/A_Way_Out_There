@@ -41,6 +41,7 @@ public class SpacePortManager : MonoBehaviour
     {
         // Switches to the "UI" map and automatically disables the previous one
         playerInput.SwitchCurrentActionMap("UI");
+        playerObj.GetComponent<ShipSystemsManager>().SetSystemActive(false, false);
     }
 
     public void PlayerTakeControl()
@@ -140,12 +141,13 @@ public class SpacePortManager : MonoBehaviour
                 didIAwake = 1;
                 return;
             }
+            if (playerObj == null) { playerObj = collision.gameObject; }
             //stop player controls
             UITakeControl();
             //open doors
             doorAnimator.Play("doors_open", 0);
             //change z of ship
-            if (playerObj == null) { playerObj = collision.gameObject; }
+            
             origYPos = playerObj.transform.position.y;
             StartCoroutine(LandShip(playerObj, collision.transform));
 
