@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class SpacePortUI : MonoBehaviour
@@ -8,6 +9,7 @@ public class SpacePortUI : MonoBehaviour
     [SerializeField] private CollectibleItem.DestinationPort currentPortType;
 
     [SerializeField] private GameObject gameCam;
+    public Animator animator;
     public void OpenMenu()//(CollectibleItem.DestinationPort portType)
     {
         currentPortType = CollectibleItem.DestinationPort.SettlementPort;
@@ -20,10 +22,20 @@ public class SpacePortUI : MonoBehaviour
     }
     public void CloseMenu()//(CollectibleItem.DestinationPort portType)
     {
-        //Swap Cameras:
-        gameCam.SetActive(true); 
+
+        //call animation
+        animator.Play("leaving");
+
+        StartCoroutine(LeavePort());
+
+
+    }
+
+    IEnumerator LeavePort() 
+    {
+        yield return new WaitForSeconds(5f);
+        gameCam.SetActive(true);
         menuPanel.SetActive(false);
-        
     }
 
     public void RefreshList()

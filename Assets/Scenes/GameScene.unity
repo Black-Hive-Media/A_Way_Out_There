@@ -31052,6 +31052,7 @@ MonoBehaviour:
   itemButtonPrefab: {fileID: 0}
   currentPortType: 0
   gameCam: {fileID: 519420028}
+  animator: {fileID: 1926012828}
 --- !u!1 &1079171007
 GameObject:
   m_ObjectHideFlags: 0
@@ -45681,7 +45682,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1926012827}
   - component: {fileID: 1926012828}
-  - component: {fileID: 1926012829}
   m_Layer: 11
   m_Name: Port_UI
   m_TagString: Untagged
@@ -45731,23 +45731,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1926012829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1926012826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 735f3db69e5c9de4a8748dea89d25e37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuPanel: {fileID: 1926012826}
-  contentParent: {fileID: 0}
-  itemButtonPrefab: {fileID: 0}
-  currentPortType: 0
-  gameCam: {fileID: 519420028}
 --- !u!1 &1943821178
 GameObject:
   m_ObjectHideFlags: 0
