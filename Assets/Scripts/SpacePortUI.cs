@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,9 @@ public class SpacePortUI : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private Transform contentParent;
-    [SerializeField] private GameObject itemButtonPrefab;
+    [SerializeField] private GameObject soldItemPrefab;
     [SerializeField] private CollectibleItem.DestinationPort currentPortType;
-
+    [SerializeField] private PlayerCredits currentPlayerCredits;
     [SerializeField] private GameObject gameCam;
     public Animator animator;
     public void OpenMenu()//(CollectibleItem.DestinationPort portType)
@@ -18,7 +19,7 @@ public class SpacePortUI : MonoBehaviour
         gameCam.SetActive(false);
 
 
-        //RefreshList();
+        RefreshList();
     }
     public void CloseMenu()//(CollectibleItem.DestinationPort portType)
     {
@@ -34,6 +35,7 @@ public class SpacePortUI : MonoBehaviour
     IEnumerator LeavePort() 
     {
         yield return new WaitForSeconds(5f);
+        CargoManager.Instance.soldAllAndResetUI();
         gameCam.SetActive(true);
         menuPanel.SetActive(false);
     }
@@ -47,30 +49,21 @@ public class SpacePortUI : MonoBehaviour
         List<CollectibleItem> items = CargoManager.Instance.cargoList;
         for (int i = 0; i < items.Count; i++)
         {
-            GameObject btnObj = Instantiate(itemButtonPrefab, contentParent);
+            GameObject btnObj = Instantiate(soldItemPrefab, contentParent);
             CollectibleItem item = items[i];
-            int index = i; // Local copy for the button click
 
             // 3. Setup button visuals
             btnObj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text =
                 $"{item.itemName} - {item.baseValue} CR";
 
             // 4. Hook up the click event
-            btnObj.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => {
+            /*btnObj.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => {
                 SellItem(index);
-            });
+            });*/
+            CargoManager.Instance.SellSpecificItem(i);
 
-            // Optional: Dim buttons for items that don't belong at this port
-            if (item.targetPort != currentPortType)
-            {
-                //btnObj.GetComponent<UnityEngine.UI.Image>().color = Color.gray;
-            }
+            currentPlayerCredits.UpdateCredits();
         }
     }
 
-    private void SellItem(int index)
-    {
-        CargoManager.Instance.SellSpecificItem(index);
-        RefreshList(); 
-    }
 }

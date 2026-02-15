@@ -107,7 +107,7 @@ public class CargoManager : MonoBehaviour
         // 1. Give money (assuming a separate WalletManager exists)
         WalletManager.Instance.AddCredits(itemToSell.baseValue);
 
-        cargoList.RemoveAt(index);
+       // cargoList.RemoveAt(index);
 
         if (cargoFullImg.activeInHierarchy == true)
         {
@@ -129,7 +129,16 @@ public class CargoManager : MonoBehaviour
 
         AI_Manager.Instance.TriggerMessage("ItemSold");
     }
+    public void soldAllAndResetUI() 
+    {
+        for (int i = 0; i < cargoList.Count; i++)
+        {
+            cargoList.RemoveAt(i);
+        }
+        
 
+       
+    }
     public void RemoveAndDestroy(GameObject objectToDestroy)
     {
         // 1. Remove the reference from the list
