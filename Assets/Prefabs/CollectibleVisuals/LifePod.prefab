@@ -24870,7 +24870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4184719950025832175
 Transform:
   m_ObjectHideFlags: 0
@@ -24965,6 +24965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 1139889202124152769}
+  tractorBeamFX: {fileID: 5520027291815765804}
 --- !u!1 &5696618796711038463
 GameObject:
   m_ObjectHideFlags: 0
@@ -35181,7 +35182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2907868426950973585
 Transform:
   m_ObjectHideFlags: 0
@@ -35204,7 +35205,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8935313722155877355}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 

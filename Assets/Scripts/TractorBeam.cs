@@ -34,7 +34,7 @@ public class TractorBeam : MonoBehaviour
     public float shakeIntensity = 0.1f; // How violent the shake is
 
     [Header("UI Reference")]
-    public Slider heatSlider; // Optional: Link to a UI Slider
+    //public Slider heatSlider; // Optional: Link to a UI Slider
     public GameObject visualFX;
     public AudioSource audioFX;
     public GameObject shipSuccessFX;
@@ -55,11 +55,11 @@ public class TractorBeam : MonoBehaviour
     {
         playerRb = GetComponentInParent<Rigidbody2D>();
         beamPoly = GetComponent<PolygonCollider2D>();
-        if (heatSlider != null)
+        /*if (heatSlider != null)
         {
             heatSlider.maxValue = maxHeat;
             heatSlider.value = 0f;
-        }
+        }*/
         ReleaseBeam();
     }
     /// <summary>
@@ -120,14 +120,15 @@ public class TractorBeam : MonoBehaviour
         ManageHeat(isBeaming);
 
         // Update UI
-        if (heatSlider != null) heatSlider.value = currentHeat;
+        //if (heatSlider != null) heatSlider.value = currentHeat;
 
         // Check for overheat status cooldown
         if (isOverheated)
         {
-            currentHeat = Mathf.Max(0, currentHeat - coolRateOverheat * Time.deltaTime);
+            //currentHeat = Mathf.Max(0, currentHeat - coolRateOverheat * Time.deltaTime);
             
-            if (currentHeat == 0) isOverheated = false;
+            //if (currentHeat == 0) 
+                isOverheated = false;
             return;
         }
     }
@@ -217,7 +218,6 @@ public class TractorBeam : MonoBehaviour
 
             if (attachedItem != null) 
             {
-                Debug.Log(attachedItem.name);
                 attachedItem.GetComponentInChildren<AlphaBeam>().UpdateColor(currentHeat, 2.0f); 
             }
             
@@ -448,6 +448,8 @@ public class TractorBeam : MonoBehaviour
                 GameObject childObject = childTransform.gameObject;
                 childObject.SetActive(false);
             }
+
+            attachedItem.GetComponentInChildren<AlphaBeam>().UpdateColor(0, 2.0f);
 
             attachedItem.transform.SetParent(null, true);
 
