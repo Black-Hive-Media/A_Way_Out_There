@@ -7,13 +7,11 @@ public class SpacePortUI : MonoBehaviour
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private Transform contentParent;
     [SerializeField] private GameObject soldItemPrefab;
-    [SerializeField] private CollectibleItem.DestinationPort currentPortType;
     [SerializeField] private PlayerCredits currentPlayerCredits;
     [SerializeField] private GameObject gameCam;
     public Animator animator;
-    public void OpenMenu()//(CollectibleItem.DestinationPort portType)
+    public void OpenMenu()
     {
-        currentPortType = CollectibleItem.DestinationPort.SettlementPort;
         menuPanel.SetActive(true);
         //Swap Cameras:
         gameCam.SetActive(false);
@@ -21,7 +19,7 @@ public class SpacePortUI : MonoBehaviour
 
         RefreshList();
     }
-    public void CloseMenu()//(CollectibleItem.DestinationPort portType)
+    public void CloseMenu()
     {
 
         //call animation
@@ -61,6 +59,7 @@ public class SpacePortUI : MonoBehaviour
                 SellItem(index);
             });*/
             CargoManager.Instance.SellSpecificItem(i);
+            Debug.Log(item.name);
 
             currentPlayerCredits.UpdateCredits();
         }

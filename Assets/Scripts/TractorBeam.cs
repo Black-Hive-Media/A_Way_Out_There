@@ -214,6 +214,13 @@ public class TractorBeam : MonoBehaviour
             }
             // Add extra heat based on player movement (friction)
             currentHeat += playerRb.linearVelocity.magnitude * playerMoveHeatMultiplier * Time.deltaTime;
+
+            if (attachedItem != null) 
+            {
+                Debug.Log(attachedItem.name);
+                attachedItem.GetComponentInChildren<AlphaBeam>().UpdateColor(currentHeat, 2.0f); 
+            }
+            
             if (currentHeat >= maxHeat)
             {
                 OverheatBeam();
