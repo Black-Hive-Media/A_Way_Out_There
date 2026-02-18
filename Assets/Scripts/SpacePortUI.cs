@@ -33,7 +33,6 @@ public class SpacePortUI : MonoBehaviour
     IEnumerator LeavePort() 
     {
         yield return new WaitForSeconds(5f);
-        CargoManager.Instance.soldAllAndResetUI();
         gameCam.SetActive(true);
         menuPanel.SetActive(false);
     }
@@ -42,14 +41,16 @@ public class SpacePortUI : MonoBehaviour
     {
         // 1. Clear existing UI items
         foreach (Transform child in contentParent) Destroy(child.gameObject);
-
+        ;
         // 2. Spawn a button for every individual item in cargo
         List<CollectibleItem> items = CargoManager.Instance.cargoList;
+       
         for (int i = 0; i < items.Count; i++)
         {
+            
             GameObject btnObj = Instantiate(soldItemPrefab, contentParent);
             CollectibleItem item = items[i];
-
+            
             // 3. Setup button visuals
             btnObj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text =
                 $"{item.itemName} - {item.baseValue} CR";
@@ -58,11 +59,21 @@ public class SpacePortUI : MonoBehaviour
             /*btnObj.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => {
                 SellItem(index);
             });*/
-            CargoManager.Instance.SellSpecificItem(i);
-            Debug.Log(item.name);
+            //CargoManager.Instance.SellSpecificItem(i);
+            
 
-            currentPlayerCredits.UpdateCredits();
+            //currentPlayerCredits.UpdateCredits();
         }
+
+        StartCoroutine(sellAll());
     }
 
+    IEnumerator sellAll() 
+    {
+        yield return new WaitForSeconds(2.0f);
+        CargoManager.Instance.RemoveAllItems();
+
+        yield return new WaitForSeconds(2.0f);
+        currentPlayerCredits.UpdateCredits();
+    }
 }

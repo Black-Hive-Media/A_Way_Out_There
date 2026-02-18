@@ -1,5 +1,6 @@
  using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public class CargoManager : MonoBehaviour
@@ -100,14 +101,14 @@ public class CargoManager : MonoBehaviour
     // Logic to sell ONE specific item by its index in the UI list
     public void SellSpecificItem(int index)
     {
-        if (index < 0 || index >= cargoList.Count) return;
+        //if (index < 0 || index >= cargoList.Count) return;
 
         CollectibleItem itemToSell = cargoList[index];
 
         // 1. Give money (assuming a separate WalletManager exists)
         WalletManager.Instance.AddCredits(itemToSell.baseValue);
 
-       // cargoList.RemoveAt(index);
+        cargoList.RemoveAt(index);
 
         if (cargoFullImg.activeInHierarchy == true)
         {
@@ -129,15 +130,36 @@ public class CargoManager : MonoBehaviour
 
         AI_Manager.Instance.TriggerMessage("ItemSold");
     }
-    public void soldAllAndResetUI() 
-    {
-        for (int i = 0; i < cargoList.Count; i++)
-        {
-            cargoList.RemoveAt(i);
-        }
-        
 
-       
+    public void RemoveAllItems() 
+    {
+        foreach (CollectibleItem item in cargoList)
+        {
+            CollectibleItem itemToSell = item;
+
+            WalletManager.Instance.AddCredits(itemToSell.baseValue);
+
+        }
+        cargoList.Clear();
+
+        if (cargoFullImg.activeInHierarchy == true)
+        {
+            cargoFullImg.SetActive(false);
+
+            GetComponentInChildren<Animator>().Play("UI_dropdown_Rev", 0);
+        }
+
+        foreach (GameObject icons in itemIcons)
+        {
+            // Make sure to destroy the actual GameObject the script is attached to
+            
+            DestroyImmediate(icons.gameObject, true);
+        }
+        itemIcons.Clear();
+         
+
+        AI_Manager.Instance.TriggerMessage("ItemSold");
+
     }
     public void RemoveAndDestroy(GameObject objectToDestroy)
     {
