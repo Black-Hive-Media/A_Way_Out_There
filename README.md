@@ -2,7 +2,7 @@
 
 Space exploration game where players manage their thrusters, glide through the universe and pick up space junk. Once their inventory is full, they can navigate back to their dock and sell items.
 
-###Features
+### Features
 
 ## In Game Features
 - movement
