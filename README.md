@@ -2,9 +2,9 @@
 
 Space exploration game where players manage their thrusters, glide through the universe and pick up space junk. Once their inventory is full, they can navigate back to their dock and sell items.
 
-### Features
+## Features
 
-## In Game Features
+### In Game Features
 - movement
 - space junk generator
 - mining laser and over heat logic
@@ -12,7 +12,7 @@ Space exploration game where players manage their thrusters, glide through the u
 - inventory
 - docking logic
 
-## Future Features
+### Future Features
 - store to upgrade ship thrusters, retractor beam, and mining laser
 - game progression for higher tier space junk
 - two-player couch co-op mode
