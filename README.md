@@ -29,6 +29,6 @@ Download the project files, navigate to Unity Hub. Click "Add Project From Disk"
 - game progression for higher tier space junk
 - two-player couch co-op mode in same ship with controls for second player's laser-net to pull in their own smaller findings on the quick
 - procedually generated space debris based on solar system 
-- multi-player online for trading commodities, exploring other players' inventor with docked with eachother(ship-to-ship docking request system)
+- multi-player online/local for trading commodities, exploring other players' inventor with docked with eachother(ship-to-ship docking request system)
 - Market trading at Space Ports for minerals, food/drink, medical supplies, and tech items
 
