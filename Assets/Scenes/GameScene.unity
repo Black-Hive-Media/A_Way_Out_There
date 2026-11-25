@@ -56676,7 +56676,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 899f5740280dae64eb9ed0ced5031c94, type: 2}
   - {fileID: 11400000, guid: afba49ccdd817c14f9589e377a4b1f0d, type: 2}
   - {fileID: 11400000, guid: 7b8a0dee1d8b6e64ba176df88dc448fd, type: 2}
-  currentSystem: 0
+  currentSystem: {fileID: 11400000, guid: e5c424d799bc78e4bb33b7a8f531f2eb, type: 2}
   layersToIgnore:
     serializedVersion: 2
     m_Bits: 512

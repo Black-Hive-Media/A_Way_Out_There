@@ -1,7 +1,7 @@
 using UnityEngine;
 [CreateAssetMenu(fileName = "NewMessage", menuName = "AI/Message")]
 
-public class AI_Message : ScriptableObject
+public class AI_Message : ContentDefinition
 {
     public string messageID;
     [TextArea(3, 10)] public string[] helpfulVariations;

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3fca1683dc6e1947a5be321cd57338c, type: 3}
   m_Name: GenericPickup
   m_EditorClassIdentifier: 
+  id: msg_generic_pickup
+  messageID: GenericPickup
   helpfulVariations:
   - You picked up an item.
   snarkyVariations:

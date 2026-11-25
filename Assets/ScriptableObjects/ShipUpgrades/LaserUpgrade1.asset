@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e40f0f6e5885b24fae801d23fc61eb8, type: 3}
   m_Name: LaserUpgrade1
   m_EditorClassIdentifier: 
+  id: upg_laser_upgrade_1
   upgradeName: Laser 2
   cost: 50
   type: 1

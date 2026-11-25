@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3fca1683dc6e1947a5be321cd57338c, type: 3}
   m_Name: Basic Movement Controls
   m_EditorClassIdentifier: 
+  id: msg_basic_movement_controls
   messageID: Basic Movement Controls
   helpfulVariations:
   - The basic movement controls are WASD or Arrow Keys.

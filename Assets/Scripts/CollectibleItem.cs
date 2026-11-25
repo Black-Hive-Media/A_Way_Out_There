@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class CollectibleItem : ScriptableObject//ShipItem
+public abstract class CollectibleItem : ContentDefinition//ShipItem
 {
     public enum MovementStyle { HeavyDrift, UnstableTumble, OrganicBob, StableStatic, ErraticThruster, Anomalous }
 
@@ -14,12 +14,12 @@ public abstract class CollectibleItem : ScriptableObject//ShipItem
     public string itemName;
     [TextArea] public string description;
     public GameObject visualPrefab;
-    public SolarSystemFound systemFoundAt;
+    public SolarSystemDefinition foundInSystem;
 
     [Header("Trade Info")]
     [Range(5, 400)]
     public int baseValue;
-    public DestinationPort targetPort;
+    public SpacePortDefinition targetSpacePort;
 
     [Header("Ship Cargo Info")]
     [Range(1,5)]
@@ -27,20 +27,4 @@ public abstract class CollectibleItem : ScriptableObject//ShipItem
 
     [Header("Hud Info")]
     public GameObject prefabForHud;
-    public enum DestinationPort
-    {
-        BountyPort,
-        SettlementPort,
-        RefineryPort,
-        CityPort
-    }
-
-    public enum SolarSystemFound
-    {
-        SolSystem, //easy
-        BlueSystem, //easy
-        GreenSystem,//medium
-        StarSystem, //hard
-        RedSystem //hard
-    }
 }

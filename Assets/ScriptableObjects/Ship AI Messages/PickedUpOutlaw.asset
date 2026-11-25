@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3fca1683dc6e1947a5be321cd57338c, type: 3}
   m_Name: PickedUpOutlaw
   m_EditorClassIdentifier: 
+  id: msg_picked_up_outlaw
+  messageID: PickedUpOutlaw
   helpfulVariations:
   - Great, another murderer on board. Guess this means we're going to the Bounty
     Port.

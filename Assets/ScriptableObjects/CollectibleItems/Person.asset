@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e272b4d2a16c3a4a9ad3f4973197fe7, type: 3}
   m_Name: Person
   m_EditorClassIdentifier: 
+  id: itm_person
   movementStyle: 4
   driftSpeed: 0.5
   rotationSpeed: 5
@@ -19,9 +20,9 @@ MonoBehaviour:
   itemName: Person
   description: Missing person.
   visualPrefab: {fileID: 5551997089353068162, guid: b764ebd98c17abc4fa7c127712261c6a, type: 3}
-  systemFoundAt: 2
+  foundInSystem: {fileID: 11400000, guid: 699598187797f1345bc046d51b36447e, type: 2}
   baseValue: 300
-  targetPort: 0
+  targetSpacePort: {fileID: 11400000, guid: db4c4224128241c4194d0f0a7e07a30d, type: 2}
   cargoUnitsRequired: 1
   prefabForHud: {fileID: 4095492817828680091, guid: 3e266bd95e270c04a8ce0551a2108dd6, type: 3}
   isHostile: 0
