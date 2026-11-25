@@ -63,7 +63,7 @@ Fields
 Notes
 SolarSystem
 id, name, difficulty_tier, primary_industry_id, secondary_industry_id, map_position, debris_density, asteroid_density, ambience_key
-Replaces SolarSystemFound; the five existing systems become five rows. No hyperdrive gate: every system and port is reachable at any tier. Hyperdrive jump_range only sets how far one jump goes, so a low tier chains more jumps through systems in between, paying fuel for each
+Replaces SolarSystemFound; the five existing systems become five rows. No hyperdrive gate: every system and port is reachable at any tier. Hyperdrive jump_range only sets how far one jump goes, so a low tier chains more jumps through systems in between, paying fuel for each. Travel between systems goes through Jump Rings (see Navigation and minimap)
 Industry
 id, name, produces_categories[], consumes_categories[]
 Mining, Agriculture, Medical, Tech, Salvage, Tourism; drives port production and consumption
@@ -380,6 +380,87 @@ target_points_local
 60 per ship in the save
 theme_cooldown
 2 goals
+Navigation and minimap
+Each player's screen has its own minimap showing their ship, other ships, ports, Jump Rings, and asteroid fields and comet belts in the current system. Ships travel between systems only through Jump Rings, and the hyperdrive's jump_range decides which links a ship can take.
+Jump Rings
+• Each system has one or more Jump Rings at fixed positions. Each ring links to one or more destination systems, and each link has a jump distance.
+• A ship can take a link only if its hyperdrive jump_range is at least that distance. A low-tier hyperdrive still reaches every system by chaining shorter links through systems in between, paying fuel for each jump.
+• Each jump costs fuel_per_jump × distance; the ring shows the cost before the pilot confirms.
+• Both crew members on a ship jump together. Other ships stay in their own system, and each split-screen view shows its own ship's system.
+What the minimap shows
+Marker
+Shown as
+Off-screen arrow
+Notes
+Own ship
+Ship arrow, in the crew's colors, always centered
+—
+Points the way the ship faces
+Other player ships
+Ship arrow in that pilot's player color
+Yes
+Only ships in the same system; a docking-request indicator when one is pending
+NPC ships
+Small neutral dot
+No
+Traders glow when they are open to trade
+Space ports
+Port icon with port-type badge
+Yes
+Highlighted when it's the destination of a delivery aboard or a community goal drop-off
+Jump Rings
+Ring icon with destination names
+Yes
+Greyed out for links the ship's hyperdrive can't reach
+Asteroid fields
+Shaded area, tinted by main ore
+No
+Area icon shows when the field holds ore the laser can mine
+Comet belts
+Shaded band along the belt's path
+No
+Belts drift slowly, so their shape updates
+Debris fields
+Light speckled area
+No
+Where salvage spawns more often
+Map boundary
+Edge line
+—
+Matches the existing MapBoundary collider
+• Two zoom levels on a button: Local (around the ship) and System (the whole system). Holding the button opens the full system map, which also shows every system's links for route planning.
+• Off-screen arrows sit on the minimap's edge and point to ports and Jump Rings outside its range, with distance in game units.
+• Markers for the delivery destination and community goal drop-off ports pulse, so kids can always find where to go.
+Split-screen layout
+• With 1 player, the minimap sits in a top corner. With 2–4 views, each view gets its own smaller minimap in the corner away from the screen's center.
+• Two crew on one ship share one view and one minimap.
+• Minimap size scales with the view and never drops below a readable minimum on Switch handheld.
+How it's built
+• Icons, not a second camera. Each marker is a UI icon placed from world position, which costs far less than rendering the scene again per view and keeps Switch frame rate safe.
+• A MinimapMarker component on each ship, port, Jump Ring and zone registers with a MinimapService. Each view's minimap draws the markers in its ship's system.
+• Zones (fields, belts, debris areas) are drawn from their shape data once per system load, not every frame. Moving markers update at 10 Hz, which is smooth enough on a minimap.
+Records
+Record
+Fields
+Notes
+JumpRing
+id, system_id, name, position, links[] (destination_system_id, destination_ring_id, distance)
+Content data; replaces free hyperdrive travel
+SpaceZone
+id, system_id, kind, shape (circle center + radius, or a path of points + width), drift_speed, density, spawn_set_id, main_resource_item_id
+kind = AsteroidField, CometBelt, DebrisField; ItemSpawn rows can point at a zone
+MinimapIconDefinition
+id, marker_kind, sprite, color_rule, priority, offscreen_arrow, min_zoom
+One per marker kind in the table above
+SolarSystem +
+map_bounds
+Size of the system, for the System zoom
+SpacePort +
+minimap_icon_id
+Optional override
+UpgradeStat +
+jump_range
+Already listed; Jump Ring links check it
 Starting tuning numbers
 These are first guesses to playtest, not final values; all live in the EconomySettings asset.
 Setting
@@ -462,6 +543,7 @@ No code has changed yet. Each step builds on the one before and leaves the game 
 13.  Dialog. Speakers, channels, tokens, exchanges.
 14.  Console saves. Switch and Xbox ISaveStorage implementations, which need their dev kits and SDKs.
 15.  Community goals. GoalTemplate import and validation, the local GoalService in the save, the scheduler, the goal board at ports and the HUD progress ticker. Needs markets (step 6), deliveries (step 10) and the save system (step 5). An online GoalService on PlayFab comes later, only if the game goes online.
+16.  Navigation and minimap. SpaceZone and JumpRing content, the MinimapMarker and MinimapService, the per-view minimap with Local and System zoom, off-screen arrows, then Jump Ring travel with hyperdrive range and fuel cost. The minimap can start right after step 3 using today's single system; Jump Ring travel needs upgrades (step 8) and split-screen (step 11).
 Open questions
 [ ] Quick-chat options for ship-to-ship comms: which preset lines and emotes, and how they're grouped in the menu. The set includes at least: "Any trades?", a request to dock sent to any ship in the same system, "Any good salvage?" and "Any good mining?".
 [ ] Does the buyback rule expire after some sim time, or apply forever to that item at that port? Decided: forever.
@@ -470,3 +552,4 @@ Open questions
 [ ] Do NPC traders also run deliveries, or only trade goods? Decided: they also run deliveries.
 [ ] Market events (for example a festival doubling food demand in one system): in the first version, or later? Decided: first version.
 [ ] Community goals: shared online by every player of the game (needs a cross-platform backend on PC, Switch and Xbox), or per save, shared by the household playing that universe at different times? Decided: local multiplayer only for now; PlayFab if the game goes online later.
+[ ] Should a Scanner upgrade slot set the minimap's Local range and when NPC ships and debris fields appear on it? Gold's description already mentions repairing the scanner.
