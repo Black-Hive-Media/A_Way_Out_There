@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9175e62a39227244896e269dc892e8e5, type: 3}
   m_Name: LandingGear
   m_EditorClassIdentifier: 
+  id: itm_landing_gear
   movementStyle: 0
   driftSpeed: 0.5
   rotationSpeed: 5
@@ -19,9 +20,9 @@ MonoBehaviour:
   itemName: LandingGear
   description: Allows you to land.
   visualPrefab: {fileID: 7963463850076906481, guid: 448a1db7f36797d4eacfc6801e5f1891, type: 3}
-  systemFoundAt: 0
+  foundInSystem: {fileID: 11400000, guid: e5c424d799bc78e4bb33b7a8f531f2eb, type: 2}
   baseValue: 20
-  targetPort: 3
+  targetSpacePort: {fileID: 11400000, guid: 97e36191a89440248a4a1c970f01537f, type: 2}
   cargoUnitsRequired: 1
   prefabForHud: {fileID: 9066168658963401772, guid: 4a784662a2599ca458900a4b934b262d, type: 3}
   compatibleEngineType: 

@@ -1,6 +1,6 @@
 using UnityEngine;
 [CreateAssetMenu(fileName = "NewUpgrade", menuName = "Systems/Upgrade")]
-public class ShipUpgrade : ScriptableObject
+public class ShipUpgrade : ContentDefinition
 {
     public string upgradeName;
     public int cost;

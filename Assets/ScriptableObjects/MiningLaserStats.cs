@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "MiningLaserStats", menuName = "Mining/LaserStats")]
-public class MiningLaserStats : ScriptableObject
+public class MiningLaserStats : ContentDefinition
 {
     public float miningSpeed = 1f;
     public float beamWobble = 0.5f;

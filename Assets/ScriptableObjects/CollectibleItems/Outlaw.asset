@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e272b4d2a16c3a4a9ad3f4973197fe7, type: 3}
   m_Name: Outlaw
   m_EditorClassIdentifier: 
+  id: itm_outlaw
   movementStyle: 4
   driftSpeed: 0.5
   rotationSpeed: 5
@@ -21,9 +22,9 @@ MonoBehaviour:
 
 '
   visualPrefab: {fileID: 5551997089353068162, guid: b764ebd98c17abc4fa7c127712261c6a, type: 3}
-  systemFoundAt: 4
+  foundInSystem: {fileID: 11400000, guid: 6a4b014c96aff5a40ba5e8e9a26cd6a3, type: 2}
   baseValue: 100
-  targetPort: 0
+  targetSpacePort: {fileID: 11400000, guid: db4c4224128241c4194d0f0a7e07a30d, type: 2}
   cargoUnitsRequired: 1
   prefabForHud: {fileID: 5459454388754610453, guid: 20033f1ed3bdcf9478160a920d52eb28, type: 3}
   isHostile: 1

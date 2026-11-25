@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6849e4d7e5c814546afd047c7d5fae71, type: 3}
   m_Name: Tier4Laser
   m_EditorClassIdentifier: 
+  id: lsr_tier_4_laser
   miningSpeed: 1
   beamWobble: 0.5
   bonusYieldChance: 0

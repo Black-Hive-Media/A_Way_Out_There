@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3fca1683dc6e1947a5be321cd57338c, type: 3}
   m_Name: LeavingMissionArea
   m_EditorClassIdentifier: 
+  id: msg_leaving_mission_area
+  messageID: LeavingMissionArea
   helpfulVariations:
   - Unless you plan on flying into a star, I suggest turning around.
   snarkyVariations:

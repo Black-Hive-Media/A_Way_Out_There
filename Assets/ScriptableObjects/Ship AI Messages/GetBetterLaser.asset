@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3fca1683dc6e1947a5be321cd57338c, type: 3}
   m_Name: GetBetterLaser
   m_EditorClassIdentifier: 
+  id: msg_get_better_laser
+  messageID: GetBetterLaser
   helpfulVariations:
   - Get a better laser!
   snarkyVariations:

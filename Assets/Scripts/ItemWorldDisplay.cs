@@ -57,7 +57,7 @@ public class ItemWorldDisplay : MonoBehaviour
         {
             AI_Manager.Instance.TriggerMessage("PickedUpOutlaw");
         }
-        else if (newItem.targetPort == CollectibleItem.DestinationPort.RefineryPort)
+        else if (newItem.targetSpacePort != null && newItem.targetSpacePort.portType == SpacePortDefinition.PortType.Refinery)
         {
             AI_Manager.Instance.TriggerMessage("PickedUpDirt");
         }

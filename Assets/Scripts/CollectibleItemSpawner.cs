@@ -14,7 +14,7 @@ public class CollectibleItemSpawner : MonoBehaviour
 
     [Header("Databases")]
     public List<CollectibleItem> itemPool; // All possible ScriptableObjects
-    public CollectibleItem.SolarSystemFound currentSystem;
+    public SolarSystemDefinition currentSystem;
 
     public LayerMask layersToIgnore; // Set "MapBoundary" layer here in Inspector
     [Header("Safe Zone Settings")]
