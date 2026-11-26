@@ -1,0 +1,8 @@
+id,message_id,helpful,snarky,snark_threshold
+msg_item_sold,ItemSold,"Cargo sold. The credits are in our wallet. | Sale complete. Nice haul!","Sold! I'll miss those rocks. Not really. | Ka-ching! Shall we go find more space junk?",0.5
+msg_purchase_success,PurchaseSuccess,"Purchase complete. Installing it now. | All paid for. Systems are green.","Ooh, shiny! I feel faster already. | New parts! Try not to bump them into asteroids.",0.5
+msg_insufficient_funds,InsufficientFunds,"We don't have enough credits for that yet. Let's sell some cargo first. | We're a little short. Time to haul more salvage.","Our wallet says no. Our wallet is very wise. | We can't afford that. Unless rocks count as money. They don't.",0.5
+msg_cargo_upgraded,CargoUpgraded,"Cargo bay expanded. We can carry more now. | Bigger hold installed. More room for treasure!","More room! I promise not to fill it with snacks. | The cargo bay is roomier. I can finally stretch my circuits.",0.5
+msg_laser_upgraded,LaserUpgraded,"Laser upgraded. We can mine faster now. | New laser online. Bigger asteroids are in reach.","Pew pew, but better. Asteroids, beware! | Laser upgraded. The rocks have been warned.",0.5
+msg_already_own_all_upgrades,AlreadyOwnAllUpgrades,"We already have the best one. Nothing left to buy here. | This part is fully upgraded!","We own them all. We're basically the fanciest ship in space. | Fully upgraded! Even the port is impressed.",0.5
+msg_big_profit,BigProfit,"Big sale! The crew wallet is looking great. | What a haul! That's a lot of credits.","Look at all those credits! Can I get a new paint job? | We're rich! Well, space-rich. Which still counts.",0.5

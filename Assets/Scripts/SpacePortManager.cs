@@ -4,7 +4,7 @@ using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
+//using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class SpacePortManager : MonoBehaviour
 {
@@ -18,6 +18,9 @@ public class SpacePortManager : MonoBehaviour
     public TextMeshProUGUI playerCreditsTxt;
 
     private GameObject playerObj;
+
+    /// <summary>The ship at this port. One ship for now; several ships docking is step 11.</summary>
+    public Ship DockedShip { get; private set; }
 
     [SerializeField] private float landingSpeed = 2f;
     [SerializeField] private float zDepthTarget = 5f;
@@ -142,6 +145,7 @@ public class SpacePortManager : MonoBehaviour
                 return;
             }
             if (playerObj == null) { playerObj = collision.gameObject; }
+            if (DockedShip == null) { DockedShip = playerObj.GetComponentInParent<Ship>(); }
             //stop player controls
             UITakeControl();
             //open doors

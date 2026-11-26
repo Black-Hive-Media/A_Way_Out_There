@@ -1,50 +1,55 @@
-using UnityEngine;
-using System;
 using TMPro;
+using UnityEngine;
+
+/// <summary>
+/// Credits display for one ship. Holds no money itself; it shows the bound Ship's wallet and
+/// reacts to its CreditsChanged event. To change credits, call Ship.AddCredits / TrySpendCredits.
+/// </summary>
 public class WalletManager : MonoBehaviour
 {
-    public static WalletManager Instance { get; private set; }
+    [Tooltip("Ship this display shows. Empty = the ship on a parent, else the only ship in the scene.")]
+    [SerializeField] private Ship ship;
 
+    [Tooltip("Unused at runtime: starting credits now come from the Ship. Kept until the move is confirmed.")]
     [SerializeField] private PlayerWallet walletData;
 
-    private TextMeshProUGUI creditsText; 
+    [Tooltip("Text to update. Empty = SpacePortManager's player credits text.")]
+    [SerializeField] private TextMeshProUGUI creditsText;
 
-    // Use an Action to notify the UI whenever the balance changes
-    public static event Action<int> OnBalanceChanged;
+    [Tooltip("A single sale above this triggers the ship AI's BigProfit line.")]
+    [SerializeField] private int bigProfitThreshold = 1000;
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+    public Ship Ship => ship;
+
     private void Start()
     {
-        creditsText = SpacePortManager.Instance.playerCreditsTxt;
+        if (creditsText == null && SpacePortManager.Instance != null)
+            creditsText = SpacePortManager.Instance.playerCreditsTxt;
+        Bind(Ship.Resolve(this, ship));
     }
-    public void AddCredits(int amount)
+
+    private void OnDestroy() => Unbind();
+
+    public void Bind(Ship newShip)
     {
-        walletData.credits += amount;
-        OnBalanceChanged?.Invoke(walletData.credits);
-
-        creditsText.text = "Credits: " + walletData.credits;
-        // AI Reaction for big scores
-        if (amount > 1000) AI_Manager.Instance.TriggerMessage("BigProfit");
+        Unbind();
+        ship = newShip;
+        if (ship != null)
+            ship.CreditsChanged += OnCreditsChanged;
     }
 
-    public bool TrySpendCredits(int cost)
+    private void Unbind()
     {
-        if (walletData.credits >= cost)
-        {
-            walletData.credits -= cost;
-            OnBalanceChanged?.Invoke(walletData.credits);
-            creditsText.text = "Credits: " + walletData.credits;
-            return true; // Purchase successful
-        }
-
-        AI_Manager.Instance.TriggerMessage("InsufficientFunds");
-        return false; // Not enough money
+        if (ship != null)
+            ship.CreditsChanged -= OnCreditsChanged;
     }
 
-    public int GetCurrentBalance() => walletData.credits;
+    private void OnCreditsChanged(int balance, int change)
+    {
+        if (creditsText != null)
+            creditsText.text = "Credits: " + balance;
+
+        if (change > bigProfitThreshold)
+            AI_Manager.Instance.TriggerMessage("BigProfit");
+    }
 }
