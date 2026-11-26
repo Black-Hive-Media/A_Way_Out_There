@@ -13,9 +13,6 @@ public class CargoManager : MonoBehaviour
     [Tooltip("Ship this HUD shows. Empty = the ship on a parent, else the only ship in the scene.")]
     [SerializeField] private Ship ship;
 
-    [HideInInspector, Tooltip("Unused: cargo now lives on the Ship. Kept until the move is confirmed.")]
-    public List<CollectibleItem> cargoList = new List<CollectibleItem>();
-
     public TextMeshProUGUI cargoText;
     public GameObject cargoFullImg;
     public Image cargoFill;

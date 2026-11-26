@@ -10,9 +10,6 @@ public class WalletManager : MonoBehaviour
     [Tooltip("Ship this display shows. Empty = the ship on a parent, else the only ship in the scene.")]
     [SerializeField] private Ship ship;
 
-    [Tooltip("Unused at runtime: starting credits now come from the Ship. Kept until the move is confirmed.")]
-    [SerializeField] private PlayerWallet walletData;
-
     [Tooltip("Text to update. Empty = SpacePortManager's player credits text.")]
     [SerializeField] private TextMeshProUGUI creditsText;
 
