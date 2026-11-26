@@ -36,3 +36,17 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 07964a81f8f6ffb43bca4b893e667a83, type: 2}
     - key: PassengerResisting
       value: {fileID: 11400000, guid: bd3bcb5c453880e429bcf58a3fe820df, type: 2}
+    - key: ItemSold
+      value: {fileID: 11400000, guid: bc001842255ed5a47883be26e90b1c28, type: 2}
+    - key: PurchaseSuccess
+      value: {fileID: 11400000, guid: ceeeae5d84aaa6748b4ceb0782b64450, type: 2}
+    - key: InsufficientFunds
+      value: {fileID: 11400000, guid: 1e6c47bad82e88e45841f5571efe5601, type: 2}
+    - key: CargoUpgraded
+      value: {fileID: 11400000, guid: 4bab5b1003408f549a532847b2843e9c, type: 2}
+    - key: LaserUpgraded
+      value: {fileID: 11400000, guid: f5f43083dbb95ea43aa35118a186d113, type: 2}
+    - key: AlreadyOwnAllUpgrades
+      value: {fileID: 11400000, guid: c377df195f1d86c449d0e27dec5b4fd0, type: 2}
+    - key: BigProfit
+      value: {fileID: 11400000, guid: b5f32a9a27895bc4dae0a00a1a33171b, type: 2}

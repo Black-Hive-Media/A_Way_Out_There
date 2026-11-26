@@ -51,8 +51,10 @@ public class TractorBeam : MonoBehaviour
     private bool isDeployed = false;
     private List<GameObject> itemsInRange = new List<GameObject>();
     private Vector2 localBeamTip;
+    private Ship ship;
     void Start()
     {
+        ship = Ship.Resolve(this, null); // the ship this beam is mounted on
         playerRb = GetComponentInParent<Rigidbody2D>();
         beamPoly = GetComponent<PolygonCollider2D>();
         /*if (heatSlider != null)
@@ -244,7 +246,7 @@ public class TractorBeam : MonoBehaviour
         ItemWorldDisplay data = item.GetComponent<ItemWorldDisplay>();
 
         // 2. Add to your ship's inventory system
-        if (CargoManager.Instance.cargoCheck(data.itemData) == true)
+        if (ship != null && ship.AddCargo(data.itemData))
         {
             data.OnItemPickup(data.itemData);
 
