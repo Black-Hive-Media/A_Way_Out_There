@@ -284,7 +284,7 @@ public static class ContentCsvImporter
 }
 
 /// <summary>
-/// ai_messages.csv. Replaces AIDataImporter.
+/// ai_messages.csv (replaced the old AIDataImporter).
 /// Columns: id, message_id (the trigger key AI_Manager.TriggerMessage uses), helpful, snarky
 /// (variations separated by |), snark_threshold.
 /// </summary>

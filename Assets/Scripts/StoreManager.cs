@@ -6,8 +6,6 @@ public class StoreManager : MonoBehaviour
     [Tooltip("Fallback ship when none is docked. Empty = the only ship in the scene.")]
     [SerializeField] private Ship ship;
 
-    [Tooltip("Unused: the laser now comes from the ship (Ship.Laser). Kept until the move is confirmed.")]
-    public LaserController playerLaser;
     //[SerializeField] private FuelSystem playerFuel; // Hypothetical fuel script
 
     private void Awake() => Instance = this;
@@ -34,7 +32,10 @@ public class StoreManager : MonoBehaviour
         if (buyer.TrySpendCredits(upgrade.cost))
         {
             ApplyUpgrade(buyer, upgrade);
-            AI_Manager.Instance.TriggerMessage("PurchaseSuccess");
+            // Cargo and laser upgrades say their own line (CargoUpgraded / LaserUpgraded);
+            // a second message here would replace it before it's shown.
+            if (upgrade.type != ShipUpgrade.UpgradeType.Cargo && upgrade.type != ShipUpgrade.UpgradeType.MiningLaser)
+                AI_Manager.Instance.TriggerMessage("PurchaseSuccess");
         }
         else
         {
