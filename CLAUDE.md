@@ -10,7 +10,7 @@ section is the build plan; do one step at a time.
 
 ## Project
 
-- Unity 6 (6000.0.18f1), URP 2D, C#.
+- Unity 6 (6000.6.10f1), URP 2D, C#.
 - Packages in use: Input System (PlayerInput, action maps "Player" and "UI"),
   Cinemachine 3, TextMeshPro, uGUI, 2D physics.
 - Main scene: `Assets/Scenes/GameScene.unity`.
@@ -40,8 +40,7 @@ section is the build plan; do one step at a time.
   plan step with a message naming the step.
 - Never edit or delete `.meta` files, and never delete assets, prefabs or scenes
   unless I ask. Unity owns `.meta` files.
-- Do not edit `.unity` scene or `.prefab` files by hand; tell me what to change
-  in the Editor instead.
+- Make scene and prefab changes through the Unity MCP tools in the open Editor, never by editing the YAML files. Save the scene after changes
 - When changing a serialized field on a ScriptableObject or MonoBehaviour, keep
   existing data safe: add the new field, migrate with an Editor script, and only
   remove the old field after I confirm the migration in Unity.
