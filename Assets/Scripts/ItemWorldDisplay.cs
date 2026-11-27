@@ -6,6 +6,9 @@ public class ItemWorldDisplay : MonoBehaviour
 
     // The actual data reference for this specific instance
     public CollectibleItem itemData { get; private set; }
+
+    /// <summary>How this item came to be floating here (debris field or a mined asteroid).</summary>
+    public AcquisitionSource Source { get; private set; } = AcquisitionSource.Debris;
     private Rigidbody2D rb; 
     private float seed;
     private GameObject newVisuals;
@@ -15,7 +18,7 @@ public class ItemWorldDisplay : MonoBehaviour
     /// This is called by the Spawner immediately after getting the object from the pool.
     /// </summary>
     ///
-    public void Setup(CollectibleItem data, GameObject parent)
+    public void Setup(CollectibleItem data, GameObject parent, AcquisitionSource source = AcquisitionSource.Debris)
     {
         foreach (Transform child in transform)
         {
@@ -24,6 +27,7 @@ public class ItemWorldDisplay : MonoBehaviour
 
         //Debug.Log(parent.name + "  " + data.name);
         itemData = data;
+        Source = source;
         rb = GetComponent<Rigidbody2D>();
         seed = Random.value * 100f; // Unique seed for Perlin noise
 

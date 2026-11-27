@@ -23,21 +23,24 @@ public class ShipState
     /// <summary>Hull base + installed Cargo upgrade.</summary>
     public int cargoUnitsMax;
 
-    /// <summary>Item definitions for now; ItemInstance records replace these in step 4.</summary>
-    public List<CollectibleItem> cargo = new List<CollectibleItem>();
+    /// <summary>One entry per physical item aboard.</summary>
+    public List<ItemInstance> cargo = new List<ItemInstance>();
 
     public int CargoUnitsUsed
     {
         get
         {
             int used = 0;
-            foreach (CollectibleItem item in cargo)
+            foreach (ItemInstance item in cargo)
                 if (item != null)
-                    used += item.cargoUnitsRequired;
+                    used += item.CargoUnits;
             return used;
         }
     }
 
     public int CargoUnitsFree => Math.Max(0, cargoUnitsMax - CargoUnitsUsed);
     public bool IsCargoFull => CargoUnitsUsed >= cargoUnitsMax;
+
+    public ItemInstance FindCargo(string instanceId) =>
+        string.IsNullOrEmpty(instanceId) ? null : cargo.Find(i => i != null && i.instanceId == instanceId);
 }

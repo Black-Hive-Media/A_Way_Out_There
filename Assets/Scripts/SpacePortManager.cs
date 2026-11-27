@@ -22,6 +22,12 @@ public class SpacePortManager : MonoBehaviour
     /// <summary>The ship at this port. One ship for now; several ships docking is step 11.</summary>
     public Ship DockedShip { get; private set; }
 
+    [Tooltip("Which space port this station is (Assets/Data/Content/Ports). Recorded on sales in the item ledger.")]
+    [SerializeField] private SpacePortDefinition port;
+
+    public SpacePortDefinition Port => port;
+    public string PortId => port != null ? port.Id : "";
+
     [SerializeField] private float landingSpeed = 2f;
     [SerializeField] private float zDepthTarget = 5f;
     private float origYPos;

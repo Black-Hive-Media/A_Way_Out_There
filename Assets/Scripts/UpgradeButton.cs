@@ -21,10 +21,23 @@ public class UpgradeButton : MonoBehaviour
             textObj = GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        ShipUpgrade next = FindNextUpgrade(out _);
-        if (next != null && textObj != null)
+        RefreshLabel();
+    }
+
+    /// <summary>"Laser 2 - 50 CR" for the next tier, or "Fully upgraded" when the ship has the last one.</summary>
+    public void RefreshLabel()
+    {
+        if (textObj == null)
+            return;
+        ShipUpgrade next = FindNextUpgrade(out bool ownsAll);
+        if (next != null)
         {
-            textObj.text = next.name + " Cost: " + next.cost;
+            string title = string.IsNullOrWhiteSpace(next.upgradeName) ? next.name : next.upgradeName;
+            textObj.text = $"{title} - {next.cost} CR";
+        }
+        else if (ownsAll)
+        {
+            textObj.text = "Fully upgraded";
         }
     }
 
@@ -34,6 +47,7 @@ public class UpgradeButton : MonoBehaviour
         if (next != null)
         {
             StoreManager.Instance.AttemptPurchase(next);
+            RefreshLabel(); // show the following tier (or "Fully upgraded") straight away
         }
         else if (ownsAll)
         {

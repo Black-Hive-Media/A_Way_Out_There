@@ -30,12 +30,12 @@ public class Ship : MonoBehaviour
 
     /// <summary>(new balance, change). Change is negative when spending.</summary>
     public event Action<int, int> CreditsChanged;
-    /// <summary>(item, index it was added at).</summary>
-    public event Action<CollectibleItem, int> CargoAdded;
-    /// <summary>(item, index it was removed from).</summary>
-    public event Action<CollectibleItem, int> CargoRemoved;
-    /// <summary>An item did not fit.</summary>
-    public event Action<CollectibleItem> CargoRejected;
+    /// <summary>An item instance came aboard.</summary>
+    public event Action<ItemInstance> CargoAdded;
+    /// <summary>An item instance left the ship (sold, jettisoned...).</summary>
+    public event Action<ItemInstance> CargoRemoved;
+    /// <summary>An item did not fit; it was not added.</summary>
+    public event Action<ItemInstance> CargoRejected;
     /// <summary>(new cargo_units_max).</summary>
     public event Action<int> CargoCapacityChanged;
 
@@ -48,6 +48,7 @@ public class Ship : MonoBehaviour
         }
     }
 
+    public string Id => State.id;
     public int Credits => State.credits;
     public int CargoUnitsUsed => State.CargoUnitsUsed;
     public int CargoUnitsMax => State.cargoUnitsMax;
@@ -107,41 +108,56 @@ public class Ship : MonoBehaviour
 
     // ---------------------------------------------------------------- Cargo
 
+    public bool CanFit(ItemInstance item) =>
+        item != null && State.CargoUnitsUsed + item.CargoUnits <= state.cargoUnitsMax;
+
     public bool CanFit(CollectibleItem item) =>
         item != null && State.CargoUnitsUsed + item.cargoUnitsRequired <= state.cargoUnitsMax;
 
-    /// <summary>Adds the item if it fits. Raises CargoAdded, or CargoRejected if it doesn't fit.</summary>
-    public bool AddCargo(CollectibleItem item)
+    /// <summary>
+    /// Puts the instance aboard if it fits and isn't already aboard; sets its shipId.
+    /// Raises CargoAdded, or CargoRejected if it doesn't fit.
+    /// </summary>
+    public bool AddCargo(ItemInstance item)
     {
-        if (item == null)
+        if (item == null || State.FindCargo(item.instanceId) != null)
             return false;
         if (!CanFit(item))
         {
             CargoRejected?.Invoke(item);
             return false;
         }
+        item.shipId = state.id;
         state.cargo.Add(item);
-        CargoAdded?.Invoke(item, state.cargo.Count - 1);
+        CargoAdded?.Invoke(item);
         return true;
     }
 
-    /// <summary>Removes the cargo entry at index and returns it, or null if the index is out of range.</summary>
-    public CollectibleItem RemoveCargoAt(int index)
+    /// <summary>
+    /// Convenience: makes a new instance of a content item (current system, current sim time)
+    /// and puts it aboard. Returns the instance, or null if it didn't fit.
+    /// </summary>
+    public ItemInstance AddCargo(CollectibleItem item, AcquisitionSource source)
     {
-        if (index < 0 || index >= State.cargo.Count)
+        if (item == null)
             return null;
-        CollectibleItem item = state.cargo[index];
-        state.cargo.RemoveAt(index);
-        CargoRemoved?.Invoke(item, index);
+        ItemInstance instance = ItemInstance.Create(item, source);
+        return AddCargo(instance) ? instance : null;
+    }
+
+    /// <summary>Takes the instance with this id off the ship and returns it, or null if it isn't aboard.</summary>
+    public ItemInstance RemoveCargo(string instanceId)
+    {
+        ItemInstance item = State.FindCargo(instanceId);
+        if (item == null)
+            return null;
+        state.cargo.Remove(item);
+        item.shipId = "";
+        CargoRemoved?.Invoke(item);
         return item;
     }
 
-    /// <summary>Removes the last cargo entry for this item. Returns false if the ship isn't carrying it.</summary>
-    public bool RemoveCargo(CollectibleItem item)
-    {
-        int index = State.cargo.LastIndexOf(item);
-        return index >= 0 && RemoveCargoAt(index) != null;
-    }
+    public ItemInstance FindCargo(string instanceId) => State.FindCargo(instanceId);
 
     // ---------------------------------------------------------------- Upgrades
 

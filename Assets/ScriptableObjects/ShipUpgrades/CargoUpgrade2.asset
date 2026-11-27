@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CargoUpgrade2
   m_EditorClassIdentifier: 
   id: upg_cargo_upgrade_2
-  upgradeName: 
+  upgradeName: Cargo Hold +5
   cost: 150
   type: 0
   upgradeData: {fileID: 0}
