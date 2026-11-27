@@ -84,7 +84,7 @@ public class CollectibleItemSpawner : MonoBehaviour
 
         if (display != null)
         {
-            display.Setup(data, itemObj);
+            display.Setup(data, itemObj, AcquisitionSource.Debris);
         }
     }
 }

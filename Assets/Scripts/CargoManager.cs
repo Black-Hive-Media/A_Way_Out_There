@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Cargo HUD for one ship: fill bar, capacity text, "cargo full" banner, item icons and the
 /// ship AI's cargo lines. Holds no cargo itself; it shows the bound Ship's cargo and reacts to
-/// its events. To change cargo, call the Ship (AddCargo / RemoveCargoAt).
+/// its events. To change cargo, call the Ship (AddCargo / RemoveCargo).
 /// </summary>
 public class CargoManager : MonoBehaviour
 {
@@ -19,8 +19,14 @@ public class CargoManager : MonoBehaviour
 
     public Transform[] placeHolderIconPos;
 
-    /// <summary>HUD icons, one per cargo entry, in the same order as the ship's cargo list.</summary>
-    public List<GameObject> itemIcons = new List<GameObject>();
+    private class HudIcon
+    {
+        public GameObject icon;
+        public int slot = -1;
+    }
+
+    /// <summary>HUD icon and slot for each cargo instance, by instanceId.</summary>
+    private readonly Dictionary<string, HudIcon> iconsById = new Dictionary<string, HudIcon>();
 
     private Animator dropdownAnimator;
 
@@ -64,7 +70,7 @@ public class CargoManager : MonoBehaviour
 
     // ---------------------------------------------------------------- Ship events
 
-    private void OnCargoAdded(CollectibleItem item, int index)
+    private void OnCargoAdded(ItemInstance item)
     {
         AI_Manager.Instance.TriggerMessage("GenericPickup");
         UpdateFill();
@@ -76,23 +82,23 @@ public class CargoManager : MonoBehaviour
         }
 
         PlayDropdown(cargoFullImg.activeInHierarchy ? "UI_dropdown_Stay" : "UI_dropdown");
-        SpawnHudIcon(item, index);
+        SpawnHudIcon(item);
     }
 
-    private void OnCargoRemoved(CollectibleItem item, int index)
+    private void OnCargoRemoved(ItemInstance item)
     {
         UpdateFill();
         HideFullBannerIfRoom();
 
-        if (index >= 0 && index < itemIcons.Count)
+        if (iconsById.TryGetValue(item.instanceId, out HudIcon hud))
         {
-            if (itemIcons[index] != null)
-                Destroy(itemIcons[index]);
-            itemIcons.RemoveAt(index);
+            if (hud.icon != null)
+                Destroy(hud.icon);
+            iconsById.Remove(item.instanceId);
         }
     }
 
-    private void OnCargoRejected(CollectibleItem item)
+    private void OnCargoRejected(ItemInstance item)
     {
         AI_Manager.Instance.TriggerMessage("CargoBayUpgradeNeeded");
     }
@@ -134,39 +140,44 @@ public class CargoManager : MonoBehaviour
             dropdownAnimator.Play(state, 0);
     }
 
-    private void SpawnHudIcon(CollectibleItem item, int index)
+    /// <summary>Icon in the first free slot, keyed by the instance id.</summary>
+    private void SpawnHudIcon(ItemInstance item)
     {
-        GameObject hudIcon = null;
-        if (item.prefabForHud != null && placeHolderIconPos.Length > 0)
+        var hud = new HudIcon { slot = FirstFreeSlot() };
+        CollectibleItem definition = item.Definition;
+        if (definition != null && definition.prefabForHud != null && hud.slot >= 0)
         {
-            // Same slot rule as before: the slot matching the cargo count.
-            Transform slot = placeHolderIconPos[Mathf.Clamp(ship.State.cargo.Count - 1, 0, placeHolderIconPos.Length - 1)];
-            hudIcon = Instantiate(item.prefabForHud);
-            hudIcon.transform.position = slot.position;
-            hudIcon.transform.SetParent(slot);
+            Transform slot = placeHolderIconPos[hud.slot];
+            hud.icon = Instantiate(definition.prefabForHud);
+            hud.icon.name = $"{definition.prefabForHud.name} [{item.ShortId}]";
+            hud.icon.transform.position = slot.position;
+            hud.icon.transform.SetParent(slot);
         }
-        // Keep the list lined up with the cargo list even if there's no icon.
-        itemIcons.Insert(Mathf.Clamp(index, 0, itemIcons.Count), hudIcon);
+        iconsById[item.instanceId] = hud;
+    }
+
+    private int FirstFreeSlot()
+    {
+        for (int slot = 0; slot < placeHolderIconPos.Length; slot++)
+        {
+            bool used = false;
+            foreach (HudIcon hud in iconsById.Values)
+                if (hud.slot == slot) { used = true; break; }
+            if (!used)
+                return slot;
+        }
+        return -1; // more cargo than slots: no icon
     }
 
     private void RebuildIcons()
     {
-        foreach (GameObject icon in itemIcons)
-            if (icon != null)
-                Destroy(icon);
-        itemIcons.Clear();
+        foreach (HudIcon hud in iconsById.Values)
+            if (hud.icon != null)
+                Destroy(hud.icon);
+        iconsById.Clear();
 
-        var cargo = ship.State.cargo;
-        for (int i = 0; i < cargo.Count; i++)
-        {
-            GameObject hudIcon = null;
-            if (cargo[i] != null && cargo[i].prefabForHud != null && i < placeHolderIconPos.Length)
-            {
-                hudIcon = Instantiate(cargo[i].prefabForHud);
-                hudIcon.transform.position = placeHolderIconPos[i].position;
-                hudIcon.transform.SetParent(placeHolderIconPos[i]);
-            }
-            itemIcons.Add(hudIcon);
-        }
+        foreach (ItemInstance item in ship.State.cargo)
+            if (item != null)
+                SpawnHudIcon(item);
     }
 }

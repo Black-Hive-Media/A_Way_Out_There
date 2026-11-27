@@ -245,9 +245,16 @@ public class TractorBeam : MonoBehaviour
         // 1. Get the item data (assuming you have an Item component)
         ItemWorldDisplay data = item.GetComponent<ItemWorldDisplay>();
 
-        // 2. Add to your ship's inventory system
-        if (ship != null && ship.AddCargo(data.itemData))
+        // 2. Make the item instance (how it was found, where, when) and add it to the ship
+        GameSession session = GameSession.Current;
+        ItemInstance instance = ItemInstance.Create(data.itemData, data.Source,
+            session != null ? session.CurrentSystemId : "", session != null ? session.Clock.Now : 0);
+        if (ship != null && ship.AddCargo(instance))
         {
+            if (session != null)
+                session.Record(data.Source == AcquisitionSource.Mined ? LedgerEvent.Mined : LedgerEvent.Collected,
+                    instance, toShipId: ship.Id);
+
             data.OnItemPickup(data.itemData);
 
             //Return this object to the pool so it can be reused

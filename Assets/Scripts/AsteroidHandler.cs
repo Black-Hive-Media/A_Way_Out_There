@@ -151,7 +151,7 @@ public class AsteroidHandler : MonoBehaviour, IMineable
         // Setup visuals and data
         //if (itemObj.GetComponent<ItemWorldDisplay>() != null) 
         //{//error on mining here
-        itemObj.GetComponent<ItemWorldDisplay>().Setup(itemData, itemObj);
+        itemObj.GetComponent<ItemWorldDisplay>().Setup(itemData, itemObj, AcquisitionSource.Mined);
         //}
 
         // Add a "scatter" effect so they don't just stack in one spot
