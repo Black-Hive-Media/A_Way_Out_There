@@ -56,6 +56,7 @@ public class SpacePortUI : MonoBehaviour
 
         RefreshList();
         ShowSellPage();
+        GameSession.Autosave("dock");
     }
 
     /// <summary>Shows the item list and Sell All; hides the upgrade buttons. Hook the Sell tab here.</summary>

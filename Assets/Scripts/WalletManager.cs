@@ -32,13 +32,25 @@ public class WalletManager : MonoBehaviour
         Unbind();
         ship = newShip;
         if (ship != null)
+        {
             ship.CreditsChanged += OnCreditsChanged;
+            ship.StateReplaced += OnStateReplaced;
+        }
     }
 
     private void Unbind()
     {
         if (ship != null)
+        {
             ship.CreditsChanged -= OnCreditsChanged;
+            ship.StateReplaced -= OnStateReplaced;
+        }
+    }
+
+    private void OnStateReplaced()
+    {
+        if (creditsText != null)
+            creditsText.text = "Credits: " + ship.Credits;
     }
 
     private void OnCreditsChanged(int balance, int change)

@@ -52,10 +52,9 @@ public class CargoManager : MonoBehaviour
         ship.CargoRemoved += OnCargoRemoved;
         ship.CargoRejected += OnCargoRejected;
         ship.CargoCapacityChanged += OnCargoCapacityChanged;
+        ship.StateReplaced += OnStateReplaced;
 
-        RebuildIcons();
-        UpdateCapacityText();
-        UpdateFill();
+        OnStateReplaced(); // draw whatever the ship holds now (it may already be loaded)
     }
 
     private void Unbind()
@@ -66,6 +65,7 @@ public class CargoManager : MonoBehaviour
         ship.CargoRemoved -= OnCargoRemoved;
         ship.CargoRejected -= OnCargoRejected;
         ship.CargoCapacityChanged -= OnCargoCapacityChanged;
+        ship.StateReplaced -= OnStateReplaced;
     }
 
     // ---------------------------------------------------------------- Ship events
@@ -109,6 +109,16 @@ public class CargoManager : MonoBehaviour
         UpdateFill();
         HideFullBannerIfRoom();
         AI_Manager.Instance.TriggerMessage("CargoUpgraded");
+    }
+
+    /// <summary>Loaded save or new game: redraw everything without AI lines or animations.</summary>
+    private void OnStateReplaced()
+    {
+        RebuildIcons();
+        UpdateCapacityText();
+        UpdateFill();
+        if (cargoFullImg != null)
+            cargoFullImg.SetActive(ship.IsCargoFull && ship.State.cargo.Count > 0);
     }
 
     // ---------------------------------------------------------------- HUD
