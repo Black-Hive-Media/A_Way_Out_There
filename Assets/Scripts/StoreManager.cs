@@ -31,44 +31,21 @@ public class StoreManager : MonoBehaviour
 
         if (buyer.TrySpendCredits(upgrade.cost))
         {
-            ApplyUpgrade(buyer, upgrade);
+            // Installs into its slot and applies it (capacity, laser stats); keeps an InstalledUpgrade record
+            if (!buyer.InstallUpgrade(upgrade))
+            {
+                buyer.AddCredits(upgrade.cost); // nothing was installed, so give the money back
+                return;
+            }
             // Cargo and laser upgrades say their own line (CargoUpgraded / LaserUpgraded);
             // a second message here would replace it before it's shown.
             if (upgrade.type != ShipUpgrade.UpgradeType.Cargo && upgrade.type != ShipUpgrade.UpgradeType.MiningLaser)
                 AI_Manager.Instance.TriggerMessage("PurchaseSuccess");
+            GameSession.Autosave("purchase");
         }
         else
         {
             AI_Manager.Instance.TriggerMessage("InsufficientFunds");
-        }
-    }
-
-    private void ApplyUpgrade(Ship buyer, ShipUpgrade upgrade)
-    {
-        switch (upgrade.type)
-        {
-            case ShipUpgrade.UpgradeType.Cargo:
-                // Capacity = ship base + this upgrade's numericValue
-                buyer.InstallCargoUpgrade(upgrade);
-                break;
-
-            case ShipUpgrade.UpgradeType.MiningLaser:
-                // Swap the LaserStats ScriptableObject in the controller
-                if (upgrade.upgradeData is MiningLaserStats newStats && buyer.Laser != null)
-                {
-                    buyer.Laser.UpdateLaserTier(newStats);
-                }
-                break;
-
-            case ShipUpgrade.UpgradeType.Retractor:
-                // Increase the pull force/range of your retractor beam
-                // RetractorBeam.Instance.UpdateStrength(upgrade.numericValue);
-                break;
-
-            case ShipUpgrade.UpgradeType.Fuel:
-                // Increase the fuel tank maximum
-                // playerFuel.UpgradeTank(upgrade.numericValue);
-                break;
         }
     }
 }

@@ -36,11 +36,13 @@ public class LaserController : MonoBehaviour
         }
 
     }
-    public void UpdateLaserTier(MiningLaserStats newStats)
+    /// <param name="announce">False when restoring a save, so the AI doesn't comment.</param>
+    public void UpdateLaserTier(MiningLaserStats newStats, bool announce = true)
     {
         this.currentStats = newStats; // Overwrites Tier 1 with Tier 2, etc.
                                       // Trigger AI snark about the new shiny laser
-        AI_Manager.Instance.TriggerMessage("LaserUpgraded");
+        if (announce)
+            AI_Manager.Instance.TriggerMessage("LaserUpgraded");
     }
     void UpdateLaserVisuals()
     {

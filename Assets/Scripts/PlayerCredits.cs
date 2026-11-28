@@ -18,6 +18,7 @@ public class PlayerCredits : MonoBehaviour
         if (ship != null)
         {
             ship.CreditsChanged += OnCreditsChanged;
+            ship.StateReplaced += UpdateCredits;
             listeningTo = ship;
         }
         UpdateCredits();
@@ -26,7 +27,10 @@ public class PlayerCredits : MonoBehaviour
     private void OnDisable()
     {
         if (listeningTo != null)
+        {
             listeningTo.CreditsChanged -= OnCreditsChanged;
+            listeningTo.StateReplaced -= UpdateCredits;
+        }
         listeningTo = null;
     }
 

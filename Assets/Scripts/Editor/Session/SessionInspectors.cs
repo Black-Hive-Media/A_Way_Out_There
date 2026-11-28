@@ -97,21 +97,68 @@ public class GameSessionInspector : Editor
     {
         DrawDefaultInspector();
 
+        var session = (GameSession)target;
+        int slot = serializedObject.FindProperty("autosaveSlot").intValue;
+        SaveButtons(session, slot);
+
         if (!Application.isPlaying)
         {
             SessionInspectorGUI.NotPlaying();
             return;
         }
 
-        var session = (GameSession)target;
         EditorGUILayout.Space();
         EditorGUILayout.LabelField($"Sim time: {session.Clock.Now:0.0}s   System: {session.CurrentSystemId}", EditorStyles.boldLabel);
-        EditorGUILayout.LabelField($"Ledger rows: {session.Ledger.rows.Count}   Schema: {session.Universe.schemaVersion}", EditorStyles.miniLabel);
+        EditorGUILayout.LabelField($"Ledger rows: {session.Ledger.rows.Count}   Item totals: {session.Universe.itemHistory.Count}   Save format: {SaveMigrator.CurrentVersion}", EditorStyles.miniLabel);
+        if (session.AutosaveBlocked)
+            EditorGUILayout.HelpBox($"Autosave is off: slot {slot} couldn't be loaded. {session.Saves.LastError}", MessageType.Error);
 
         foreach (Ship ship in FindObjectsByType<Ship>())
             SessionInspectorGUI.Cargo(ship);
 
         SessionInspectorGUI.Ledger(session.Ledger.Latest(SessionInspectorGUI.LedgerRowsShown),
             $"Ledger (last {SessionInspectorGUI.LedgerRowsShown}, newest first)");
+    }
+
+    private static void SaveButtons(GameSession session, int slot)
+    {
+        var storage = Application.isPlaying && session.Saves != null ? session.Saves.Storage as PcSaveStorage : new PcSaveStorage();
+        if (storage == null)
+            return;
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField($"Save slot {slot}", EditorStyles.boldLabel);
+        string path = storage.PathFor(slot);
+        if (System.IO.File.Exists(path))
+        {
+            var info = new System.IO.FileInfo(path);
+            EditorGUILayout.LabelField($"  {info.Length / 1024f:0.0} KB, saved {info.LastWriteTime:g}", EditorStyles.miniLabel);
+        }
+        else
+        {
+            EditorGUILayout.LabelField("  No save yet.", EditorStyles.miniLabel);
+        }
+
+        using (new EditorGUILayout.HorizontalScope())
+        {
+            using (new EditorGUI.DisabledScope(!Application.isPlaying))
+            {
+                if (GUILayout.Button(new GUIContent("Save Now", "Play mode only")))
+                    session.Saves.Save(slot);
+                if (GUILayout.Button(new GUIContent("Load", "Play mode only")))
+                    session.Saves.Load(slot);
+            }
+            if (GUILayout.Button("Delete Save") &&
+                EditorUtility.DisplayDialog("Delete save", $"Delete slot {slot} and its backup?\n{path}", "Delete", "Cancel"))
+            {
+                storage.Delete(slot);
+                Debug.Log($"[Save] Slot {slot} deleted.");
+            }
+            if (GUILayout.Button("Open Save Folder"))
+            {
+                System.IO.Directory.CreateDirectory(storage.Folder);
+                EditorUtility.RevealInFinder(System.IO.File.Exists(path) ? path : storage.Folder);
+            }
+        }
     }
 }

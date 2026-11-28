@@ -32,7 +32,11 @@ public class SpacePortManager : MonoBehaviour
     [SerializeField] private float zDepthTarget = 5f;
     private float origYPos;
 
-    int didIAwake = 0;
+    /// <summary>
+    /// The ship can start the scene inside the port's trigger (fresh start, or a save made while
+    /// docked); ignore triggers this soon after load so that doesn't count as docking.
+    /// </summary>
+    private const float IgnoreTriggersAfterLoadSeconds = 1f;
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -91,6 +95,7 @@ public class SpacePortManager : MonoBehaviour
         shipTransform.position = new Vector3(shipTransform.position.x, shipTransform.position.y, 0);
         vcam.Follow = shipTransform;
         playerInput.SwitchCurrentActionMap("Player");
+        GameSession.Autosave("undock");
     }
 
     private IEnumerator LandShip(GameObject playerShip, Transform shipTransform)
@@ -145,11 +150,8 @@ public class SpacePortManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (didIAwake == 0)
-            {
-                didIAwake = 1;
+            if (Time.timeSinceLevelLoad < IgnoreTriggersAfterLoadSeconds)
                 return;
-            }
             if (playerObj == null) { playerObj = collision.gameObject; }
             if (DockedShip == null) { DockedShip = playerObj.GetComponentInParent<Ship>(); }
             //stop player controls

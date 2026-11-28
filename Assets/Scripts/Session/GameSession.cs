@@ -1,8 +1,9 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// The running game: owns the UniverseState (sim clock, item ledger) and points at the content
-/// database. One per scene; put it on an empty GameObject in GameScene.
+/// The running game: owns the UniverseState (sim clock, item ledger, item history), the save
+/// service, and points at the content database. One per scene, on the GameSession object.
 /// </summary>
 [DisallowMultipleComponent]
 public class GameSession : MonoBehaviour
@@ -13,7 +14,15 @@ public class GameSession : MonoBehaviour
     [Tooltip("The system this scene is. Empty = CollectibleItemSpawner's Current System.")]
     [SerializeField] private SolarSystemDefinition currentSystem;
 
+    [Header("Saving")]
+    [Tooltip("Slot used for autosave and for loading on start.")]
+    [SerializeField, Min(0)] private int autosaveSlot = 0;
+    [Tooltip("On start, load the autosave slot if it exists, otherwise start a new game in it.")]
+    [SerializeField] private bool loadOnStart = true;
+
     private UniverseState universe = new UniverseState();
+    private bool autosavePending;
+    private bool autosaveBlocked;
 
     private static GameSession current;
     private static bool quitting;
@@ -39,6 +48,11 @@ public class GameSession : MonoBehaviour
     public SimClock Clock => universe.clock;
     public ItemLedger Ledger => universe.ledger;
     public ContentDatabase Content => content;
+    public SaveService Saves { get; private set; }
+    public int AutosaveSlot => autosaveSlot;
+
+    /// <summary>True when autosave is off because the slot couldn't be loaded (so it isn't overwritten).</summary>
+    public bool AutosaveBlocked => autosaveBlocked;
 
     public SolarSystemDefinition CurrentSystem
     {
@@ -65,13 +79,81 @@ public class GameSession : MonoBehaviour
             return;
         }
         current = this;
+        quitting = false;
+        Saves = new SaveService(this, new PcSaveStorage());
         if (content == null)
             Debug.LogWarning("[GameSession] No Content Database assigned. Items still work, but ids can't be looked up.", this);
     }
 
+    private void Start()
+    {
+        if (!loadOnStart)
+            return;
+
+        if (Saves.Storage.Exists(autosaveSlot))
+        {
+            if (!Saves.Load(autosaveSlot))
+            {
+                autosaveBlocked = true;
+                Debug.LogError($"[GameSession] Slot {autosaveSlot} couldn't be loaded, so autosave is off to keep that file safe. {Saves.LastError}", this);
+            }
+        }
+        else
+        {
+            Saves.NewGame(autosaveSlot);
+        }
+    }
+
     private void Update() => universe.clock.Advance(Time.deltaTime);
 
-    private void OnApplicationQuit() => quitting = true;
+    /// <summary>Replaces the universe (load / new game).</summary>
+    public void SetUniverse(UniverseState state) => universe = state ?? new UniverseState();
+
+    // ---------------------------------------------------------------- Autosave
+
+    /// <summary>Queue an autosave of the session's slot; written at the end of this frame.</summary>
+    public static void Autosave(string reason)
+    {
+        GameSession session = Current;
+        if (session != null)
+            session.RequestAutosave(reason);
+    }
+
+    public void RequestAutosave(string reason)
+    {
+        if (autosaveBlocked || autosavePending || !isActiveAndEnabled)
+            return;
+        autosavePending = true;
+        StartCoroutine(AutosaveAtEndOfFrame(reason));
+    }
+
+    private IEnumerator AutosaveAtEndOfFrame(string reason)
+    {
+        yield return new WaitForEndOfFrame(); // after physics, scripts and rendering: never mid-physics
+        autosavePending = false;
+        Debug.Log($"[Save] Autosave ({reason}).");
+        Saves.Save(autosaveSlot);
+    }
+
+    private void SaveNow(string reason)
+    {
+        if (autosaveBlocked || Saves == null || !enabled)
+            return;
+        Debug.Log($"[Save] Autosave ({reason}).");
+        Saves.Save(autosaveSlot);
+    }
+
+    private void OnApplicationPause(bool paused)
+    {
+        if (paused)
+            SaveNow("app paused"); // the app may be suspended before the frame ends
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveNow("quit");
+        quitting = true;
+    }
 
     private void OnDestroy()
     {
@@ -79,7 +161,9 @@ public class GameSession : MonoBehaviour
             current = null;
     }
 
+    // ---------------------------------------------------------------- Ledger
+
     /// <summary>Writes a ledger row stamped with the current sim time.</summary>
     public LedgerRow Record(LedgerEvent eventType, ItemInstance item, string fromShipId = "", string toShipId = "", string portId = "", int price = 0) =>
-        universe.ledger.Record(eventType, item != null ? item.instanceId : "", universe.clock.Now, fromShipId, toShipId, portId, price);
+        universe.ledger.Record(eventType, item != null ? item.instanceId : "", item != null ? item.itemId : "", universe.clock.Now, fromShipId, toShipId, portId, price);
 }
